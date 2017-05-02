@@ -10,20 +10,30 @@
 
     <title>True Social Platform</title>
 
+    <!-- jQuery -->
+    <script type="text/javascript" src="/webjars/jquery/3.2.0/jquery.min.js"></script>
+
     <!-- Bootstrap -->
     <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css"/>
     <script type="text/javascript" src="/webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-    <!-- jQuery -->
-    <script type="text/javascript" src="/webjars/jquery/3.2.0/jquery.min.js"></script>
-
     <!-- AngularJS -->
     <script type="text/javascript" src="/webjars/angularjs/1.6.2/angular.min.js"></script>
+
+    <!-- Custom JS scripts -->
+    <script type="text/javascript" src="js/main.js"></script>
+    <script type="text/javascript" src="js/mainController.js"></script>
 </head>
 
-<body>
+<body ng-app="app" ng-controller="mainController">
     <h1>True Social Platform</h1>
-    <div class="container"></div>
+    <h2>Login</h2>
+    <div class="container" ng-show="!authenticated">
+        <p>Login with <a href="/login">Facebook account</a>.</p>
+    </div>
+    <div class="container" ng-show="authenticated">
+        <p>Logged in as <span ng-bind="user"></span>.</p>
+    </div>
 </body>
 
 </html>
