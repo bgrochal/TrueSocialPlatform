@@ -1,25 +1,27 @@
 package pl.edu.agh.iet.tsp.core.domain;
 
-import org.springframework.data.annotation.Id;
-
-import java.util.UUID;
+import org.bson.types.ObjectId;
+import org.mongodb.morphia.annotations.*;
 
 /**
  * @author Wojciech Pachuta.
  */
+@Entity
+@Indexes(@Index(value = User.USERNAME, fields = @Field(User.USERNAME), options = @IndexOptions(unique = true)))
 public class User {
 
+    public static final String USERNAME = "username";
+
     @Id
-    private UUID id;
+    private ObjectId id;
 
     private final String username;
 
     public User(String username) {
-        this.id = UUID.randomUUID();
         this.username = username;
     }
 
-    public UUID getId() {
+    public ObjectId getId() {
         return id;
     }
 

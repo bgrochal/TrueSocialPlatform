@@ -6,6 +6,6 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Wojciech Pachuta.
  */
 @RestController
-public class UserController {
+public class CommentController {
 
 }
