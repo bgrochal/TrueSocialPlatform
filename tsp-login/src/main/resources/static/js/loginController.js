@@ -1,5 +1,6 @@
-app.controller('mainController', ['$http', '$scope', '$location', function ($http, $scope, $location) {
-    $http.get('/user').then(
+app.controller('loginController', ['$http', '$scope', '$location', function ($http, $scope, $location) {
+
+    $http.get('/me').then(
         function (response) {
             $scope.authenticated = true;
             $scope.user = response.data.userAuthentication.details.name;
@@ -18,4 +19,5 @@ app.controller('mainController', ['$http', '$scope', '$location', function ($htt
                 console.log(error);
             });
     };
+
 }]);

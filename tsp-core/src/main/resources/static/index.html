@@ -21,27 +21,13 @@
     <script type="text/javascript" src="/webjars/angularjs/1.6.2/angular.min.js"></script>
 
     <!-- Custom JS scripts -->
-    <script type="text/javascript" src="js/main.js"></script>
-    <script type="text/javascript" src="js/mainController.js"></script>
+    <script type="text/javascript" src="js/angularMain.js"></script>
+    <script type="text/javascript" src="js/loginController.js"></script>
 </head>
 
-<body ng-app="app" ng-controller="mainController">
+<body ng-app="app">
     <h1>True Social Platform</h1>
-    <h2>Login</h2>
-    <div class="container" ng-show="!authenticated">
-        <div>
-            <p>Login with <a href="/login/facebook">Facebook account</a>.</p>
-        </div>
-        <div>
-            <p>Login with <a href="/login/github">Github account</a>.</p>
-        </div>
-    </div>
-    <div class="container" ng-show="authenticated">
-        <p>Logged in as <span ng-bind="user"></span>.</p>
-        <div>
-            <button ng-click="logout()" class="btn btn-primary">Logout</button>
-        </div>
-    </div>
+    <div ng-include="'login.html'" ng-controller="loginController"></div>
 </body>
 
 </html>
