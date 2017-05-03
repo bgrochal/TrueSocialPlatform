@@ -33,6 +33,9 @@
     </div>
     <div class="container" ng-show="authenticated">
         <p>Logged in as <span ng-bind="user"></span>.</p>
+        <div>
+            <button ng-click="logout()" class="btn btn-primary">Logout</button>
+        </div>
     </div>
 </body>
 

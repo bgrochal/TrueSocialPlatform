@@ -1,4 +1,4 @@
-app.controller('mainController', ['$http', '$scope', function ($http, $scope) {
+app.controller('mainController', ['$http', '$scope', '$location', function ($http, $scope, $location) {
     $http.get('/user').then(
         function (response) {
             $scope.authenticated = true;
@@ -7,4 +7,15 @@ app.controller('mainController', ['$http', '$scope', function ($http, $scope) {
             $scope.authenticated = false;
             $scope.user = 'Non-Authenticated';
         });
+
+    $scope.logout = function () {
+        $http.post('/logout', {}).then(
+            function (response) {
+                $scope.authenticated = false;
+                $location.path('/');
+            }, function (error) {
+                $scope.authenticated = false;
+                console.log(error);
+            });
+    };
 }]);
