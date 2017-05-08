@@ -18,6 +18,13 @@
     <name>True Social Platform - login module</name>
 
     <dependencies>
+        <!-- True Social Platform - database module -->
+        <dependency>
+            <groupId>pl.edu.agh.iet</groupId>
+            <artifactId>tsp-database</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
         <!-- Spring Boot Security Starter -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
