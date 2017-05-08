@@ -1,11 +1,11 @@
-package pl.edu.agh.iet.tsp.login.oauth2.configuration.facebook;
+package pl.edu.agh.iet.tsp.login.oauth2.config.facebook;
 
 import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.oauth2.client.token.grant.code.AuthorizationCodeResourceDetails;
-import pl.edu.agh.iet.tsp.login.oauth2.configuration.ClientConfiguration;
+import pl.edu.agh.iet.tsp.login.oauth2.config.ClientConfiguration;
 
 /**
  * @author Bartłomiej Grochal

@@ -11,7 +11,7 @@ import org.springframework.security.oauth2.client.filter.OAuth2ClientAuthenticat
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.web.filter.CompositeFilter;
-import pl.edu.agh.iet.tsp.login.oauth2.configuration.ClientConfiguration;
+import pl.edu.agh.iet.tsp.login.oauth2.config.ClientConfiguration;
 
 import javax.servlet.Filter;
 import java.util.List;
