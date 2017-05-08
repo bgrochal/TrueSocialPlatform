@@ -2,9 +2,17 @@ app.controller('loginController', ['$http', '$scope', '$location', function ($ht
 
     $http.get('/me').then(
         function (response) {
+            $scope.loginError = '';
             $scope.authenticated = true;
-            $scope.user = response.data.userAuthentication.details.name;
+            $scope.user = response.data.name.concat(' (', response.data.email, ')');
         }, function (error) {
+            if (error.status == 401) {
+                $scope.logout();
+                $scope.loginError = error.data.errorMessage
+            }
+            if (error.status == 403) {
+                $scope.loginError = '';
+            }
             $scope.authenticated = false;
             $scope.user = 'Non-Authenticated';
         });

@@ -9,6 +9,9 @@
     <div>
         <p>Login with <a href="/login/google">Google account</a>.</p>
     </div>
+    <div>
+        <span ng-bind="loginError"></span>
+    </div>
 </div>
 <div class="container" ng-show="authenticated">
     <p>Logged in as <span ng-bind="user"></span>.</p>
