@@ -4,6 +4,7 @@ import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.*;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 /**
  * @author Wojciech Pachuta.
@@ -27,16 +28,13 @@ public class Post {
 
     private final ObjectId authorId;
     private final LocalDateTime creationTime;
+    private final LocalDateTime lastModificationTime;
     private final String title;
     private final String category;
     private final String content;
 
     public Post() {
-        this.authorId = null;
-        this.creationTime = null;
-        this.title = null;
-        this.category = null;
-        this.content = null;
+        this(null, null, null, null, null, null, null);
     }
 
     public Post(ObjectId authorId, LocalDateTime creationTime, String title, String category, String content) {
@@ -45,6 +43,17 @@ public class Post {
         this.title = title;
         this.category = category;
         this.content = content;
+        this.lastModificationTime = null;
+    }
+
+    public Post(ObjectId id, ObjectId authorId, LocalDateTime creationTime, String title, String category, String content, LocalDateTime lastModificationTime) {
+        this.id = id;
+        this.authorId = authorId;
+        this.creationTime = creationTime;
+        this.title = title;
+        this.category = category;
+        this.content = content;
+        this.lastModificationTime = lastModificationTime;
     }
 
     public ObjectId getId() {
@@ -69,5 +78,9 @@ public class Post {
 
     public String getContent() {
         return content;
+    }
+
+    public Optional<LocalDateTime> getLastModificationTime() {
+        return Optional.ofNullable(lastModificationTime);
     }
 }

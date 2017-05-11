@@ -1,9 +1,11 @@
 package pl.edu.agh.iet.tsp.core.service;
 
+import org.bson.types.ObjectId;
 import pl.edu.agh.iet.tsp.core.domain.Post;
 
-import java.util.List;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Wojciech Pachuta.
@@ -19,7 +21,11 @@ public interface PostService {
 
     boolean existsNextPage(LocalDateTime after);
 
-    boolean existsNextPage(String category, LocalDateTime after);
+    boolean existsNextPageInCategory(String category, LocalDateTime after);
 
-    void addPost(Post post);
+    Optional<Post> getPost(ObjectId authorId, ObjectId postId);
+
+    ObjectId addPost(Post post);
+
+    void updatePost(Post post);
 }

@@ -1,5 +1,6 @@
 package pl.edu.agh.iet.tsp.core.service.impl;
 
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.edu.agh.iet.tsp.core.db.PostDao;
@@ -8,6 +9,7 @@ import pl.edu.agh.iet.tsp.core.service.PostService;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Wojciech Pachuta.
@@ -44,12 +46,23 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public boolean existsNextPage(String category, LocalDateTime dateTime) {
+    public boolean existsNextPageInCategory(String category, LocalDateTime dateTime) {
         return postDao.existsNextPage(category, dateTime);
     }
 
     @Override
-    public void addPost(Post post) {
+    public Optional<Post> getPost(ObjectId authorId, ObjectId postId) {
+        return postDao.getPost(authorId, postId);
+    }
+
+    @Override
+    public ObjectId addPost(Post post) {
+        postDao.save(post);
+        return post.getId();
+    }
+
+    @Override
+    public void updatePost(Post post) {
         postDao.save(post);
     }
 }

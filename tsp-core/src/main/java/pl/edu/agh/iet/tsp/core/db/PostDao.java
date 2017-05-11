@@ -1,10 +1,12 @@
 package pl.edu.agh.iet.tsp.core.db;
 
+import org.bson.types.ObjectId;
 import org.mongodb.morphia.dao.DAO;
 import pl.edu.agh.iet.tsp.core.domain.Post;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -38,4 +40,5 @@ public interface PostDao extends DAO<Post, UUID> {
 
     boolean existsNextPage(String category, LocalDateTime dateTime);
 
+    Optional<Post> getPost(ObjectId authorId, ObjectId postId);
 }

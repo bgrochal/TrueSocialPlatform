@@ -1,21 +1,27 @@
 package pl.edu.agh.iet.tsp.core.db.impl;
 
+import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.dao.BasicDAO;
 import org.mongodb.morphia.query.FindOptions;
 import org.mongodb.morphia.query.Sort;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import pl.edu.agh.iet.tsp.core.db.PostDao;
 import pl.edu.agh.iet.tsp.core.domain.Post;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 /**
  * @author Wojciech Pachuta.
  */
+@Repository
 public class PostDaoImpl extends BasicDAO<Post, UUID> implements PostDao {
 
+    @Autowired
     public PostDaoImpl(Datastore datastore) {
         super(datastore);
     }
@@ -72,5 +78,13 @@ public class PostDaoImpl extends BasicDAO<Post, UUID> implements PostDao {
                 .field(Post.CATEGORY).equal(category)
                 .field(Post.CREATION_TIME).lessThan(dateTime)
                 .get();
+    }
+
+    @Override
+    public Optional<Post> getPost(ObjectId authorId, ObjectId postId) {
+        return Optional.ofNullable(createQuery()
+                .field(Post.AUTHOR_ID).equal(authorId)
+                .field("_id").equal(postId)
+                .get());
     }
 }

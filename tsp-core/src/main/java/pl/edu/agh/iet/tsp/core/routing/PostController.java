@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import pl.edu.agh.iet.tsp.core.config.ApplicationConfig.AppConfig;
 import pl.edu.agh.iet.tsp.core.domain.Post;
+import pl.edu.agh.iet.tsp.core.routing.json.IdWrapper;
 import pl.edu.agh.iet.tsp.core.routing.json.PagedResult;
 import pl.edu.agh.iet.tsp.core.routing.json.PostCreation;
 import pl.edu.agh.iet.tsp.core.service.PostService;
@@ -30,12 +31,33 @@ public class PostController {
     private PostService postService;
 
     @RequestMapping(value = "/posts", method = RequestMethod.POST)
-    public void addPost(
+    public IdWrapper addPost(
             @RequestParam String authorId,
-            @RequestParam(required = false) String category,
             @RequestBody PostCreation postCreation) {
-        Post post = new Post(new ObjectId(authorId), utcNow(), postCreation.title, category, postCreation.content);
-        postService.addPost(post);
+        Post post = new Post(new ObjectId(authorId), utcNow(), postCreation.title, postCreation.category, postCreation.content);
+        return new IdWrapper(postService.addPost(post));
+    }
+
+    @RequestMapping(value = "/posts/{postId}", method = RequestMethod.PUT)
+    public void modifyPost(
+            @RequestParam String authorId, //this will probably be necessary for auth
+            @PathVariable("postId") String postId,
+            @RequestBody PostCreation postCreation) {
+        Optional<Post> oldPost = postService.getPost(new ObjectId(authorId), new ObjectId(postId));
+        if (!oldPost.isPresent()) {
+            throw new IllegalArgumentException();
+        }
+
+        Post newPost = new Post(
+                new ObjectId(postId),
+                new ObjectId(authorId),
+                oldPost.get().getCreationTime(),
+                postCreation.title,
+                postCreation.category,
+                postCreation.content,
+                utcNow());
+
+        postService.updatePost(newPost);
     }
 
 
@@ -61,7 +83,7 @@ public class PostController {
 
         boolean existsNextPage;
         if (category != null) {
-            existsNextPage = lastPostInPageCreationTime.map(x -> postService.existsNextPage(category, x)).orElse(false);
+            existsNextPage = lastPostInPageCreationTime.map(x -> postService.existsNextPageInCategory(category, x)).orElse(false);
         } else {
             existsNextPage = lastPostInPageCreationTime.map(postService::existsNextPage).orElse(false);
         }
