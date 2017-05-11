@@ -73,7 +73,7 @@ public class PostDaoImpl extends BasicDAO<Post, UUID> implements PostDao {
     }
 
     @Override
-    public boolean existsNextPage(String category, LocalDateTime dateTime) {
+    public boolean existsNextPageInCategory(String category, LocalDateTime dateTime) {
         return null != createQuery()
                 .field(Post.CATEGORY).equal(category)
                 .field(Post.CREATION_TIME).lessThan(dateTime)

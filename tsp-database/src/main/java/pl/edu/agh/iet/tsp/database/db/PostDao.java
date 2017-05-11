@@ -38,7 +38,7 @@ public interface PostDao extends DAO<Post, UUID> {
 
     boolean existsNextPage(LocalDateTime after);
 
-    boolean existsNextPage(String category, LocalDateTime dateTime);
+    boolean existsNextPageInCategory(String category, LocalDateTime dateTime);
 
     Optional<Post> getPost(ObjectId authorId, ObjectId postId);
 }

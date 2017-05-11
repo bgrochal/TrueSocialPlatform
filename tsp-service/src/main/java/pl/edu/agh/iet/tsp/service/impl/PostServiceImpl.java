@@ -47,7 +47,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public boolean existsNextPageInCategory(String category, LocalDateTime dateTime) {
-        return postDao.existsNextPage(category, dateTime);
+        return postDao.existsNextPageInCategory(category, dateTime);
     }
 
     @Override
