@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-COMPATIBLE" content="IE=edge"/>
+    <meta name="description"
+          content="The True Social Platform is a base-framework which helps building social platforms on top of it."/>
+    <meta name="viewport" content="width=device-width"/>
+    <base href="/"/>
+
+    <title>True Social Platform</title>
+
+    <!-- jQuery -->
+    <script type="text/javascript" src="/webjars/jquery/3.2.0/jquery.min.js"></script>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <script type="text/javascript" src="/webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <!-- AngularJS -->
+    <script type="text/javascript" src="/webjars/angularjs/1.6.2/angular.min.js"></script>
+
+    <!-- Custom JS scripts -->
+    <script type="text/javascript" src="js/angularMain.js"></script>
+    <script type="text/javascript" src="js/loginController.js"></script>
+</head>
+
+<body ng-app="app">
+    <h1>True Social Platform</h1>
+    <div ng-include="'login.html'" ng-controller="loginController"></div>
+</body>
+
+</html>
