@@ -29,9 +29,10 @@
 
 
     <modules>
-        <module>tsp-core</module>
+        <module>tsp-web</module>
         <module>tsp-database</module>
         <module>tsp-login</module>
+        <module>tsp-service</module>
     </modules>
 
     <build>
@@ -72,13 +73,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
             <version>${spring.boot.version}</version>
-        </dependency>
-
-        <!-- Morphia -->
-        <dependency>
-            <groupId>org.mongodb.morphia</groupId>
-            <artifactId>morphia</artifactId>
-            <version>1.3.2</version>
         </dependency>
 
         <!-- AngularJS -->

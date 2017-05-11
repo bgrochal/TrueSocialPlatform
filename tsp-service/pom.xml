@@ -11,19 +11,20 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>tsp-database</artifactId>
+    <artifactId>tsp-service</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>True Social Platform - database module</name>
+    <name>True Social Platform - service module</name>
+
 
     <dependencies>
 
-        <!-- Morphia -->
+        <!-- True Social Platform - database module -->
         <dependency>
-            <groupId>org.mongodb.morphia</groupId>
-            <artifactId>morphia</artifactId>
-            <version>1.3.2</version>
+            <groupId>pl.edu.agh.iet</groupId>
+            <artifactId>tsp-database</artifactId>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
 
     </dependencies>
