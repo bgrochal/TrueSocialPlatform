@@ -10,6 +10,7 @@ import pl.edu.agh.iet.tsp.core.routing.json.IdWrapper;
 import pl.edu.agh.iet.tsp.core.routing.json.PagedResult;
 import pl.edu.agh.iet.tsp.core.routing.json.PostCreation;
 import pl.edu.agh.iet.tsp.core.service.PostService;
+import pl.edu.agh.iet.tsp.core.service.exception.NoSuchPostException;
 
 import java.net.URISyntaxException;
 import java.time.LocalDateTime;
@@ -42,10 +43,10 @@ public class PostController {
     public void modifyPost(
             @RequestParam String authorId, //this will probably be necessary for auth
             @PathVariable("postId") String postId,
-            @RequestBody PostCreation postCreation) {
+            @RequestBody PostCreation postCreation) throws NoSuchPostException {
         Optional<Post> oldPost = postService.getPost(new ObjectId(authorId), new ObjectId(postId));
         if (!oldPost.isPresent()) {
-            throw new IllegalArgumentException();
+            throw new NoSuchPostException();
         }
 
         Post newPost = new Post(
