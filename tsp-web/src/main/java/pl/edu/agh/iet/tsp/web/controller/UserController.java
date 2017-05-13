@@ -1,11 +1,11 @@
-package pl.edu.agh.iet.tsp.core.controller;
+package pl.edu.agh.iet.tsp.web.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import pl.edu.agh.iet.tsp.core.controller.json.IdWrapper;
+import pl.edu.agh.iet.tsp.web.controller.json.IdWrapper;
 import pl.edu.agh.iet.tsp.database.domain.User;
 import pl.edu.agh.iet.tsp.service.UserService;
 import pl.edu.agh.iet.tsp.service.exception.DuplicateUsernameException;

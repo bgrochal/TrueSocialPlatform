@@ -1,4 +1,4 @@
-package pl.edu.agh.iet.tsp.core.controller.mapper;
+package pl.edu.agh.iet.tsp.web.controller.mapper;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;

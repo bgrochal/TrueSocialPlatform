@@ -1,4 +1,4 @@
-package pl.edu.agh.iet.tsp.core.error;
+package pl.edu.agh.iet.tsp.web.error;
 
 import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
 import org.springframework.boot.web.servlet.ErrorPage;

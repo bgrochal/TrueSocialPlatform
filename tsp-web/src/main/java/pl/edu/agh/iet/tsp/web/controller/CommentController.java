@@ -1,13 +1,13 @@
-package pl.edu.agh.iet.tsp.core.controller;
+package pl.edu.agh.iet.tsp.web.controller;
 
 import org.apache.http.client.utils.URIBuilder;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import pl.edu.agh.iet.tsp.core.config.ApplicationConfig;
-import pl.edu.agh.iet.tsp.core.controller.json.CommentCreation;
-import pl.edu.agh.iet.tsp.core.controller.json.IdWrapper;
-import pl.edu.agh.iet.tsp.core.controller.json.PagedResult;
+import pl.edu.agh.iet.tsp.web.config.ApplicationConfig;
+import pl.edu.agh.iet.tsp.web.controller.json.CommentCreation;
+import pl.edu.agh.iet.tsp.web.controller.json.IdWrapper;
+import pl.edu.agh.iet.tsp.web.controller.json.PagedResult;
 import pl.edu.agh.iet.tsp.database.domain.Comment;
 import pl.edu.agh.iet.tsp.service.CommentService;
 import pl.edu.agh.iet.tsp.service.exception.NoSuchCommentException;

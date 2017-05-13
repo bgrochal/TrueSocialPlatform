@@ -1,4 +1,4 @@
-package pl.edu.agh.iet.tsp.core.controller.json;
+package pl.edu.agh.iet.tsp.web.controller.json;
 
 import java.util.List;
 

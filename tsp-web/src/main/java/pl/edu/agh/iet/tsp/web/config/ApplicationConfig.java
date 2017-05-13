@@ -1,4 +1,4 @@
-package pl.edu.agh.iet.tsp.core.config;
+package pl.edu.agh.iet.tsp.web.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

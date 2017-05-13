@@ -1,13 +1,13 @@
-package pl.edu.agh.iet.tsp.core.controller.config;
+package pl.edu.agh.iet.tsp.web.controller.config;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import pl.edu.agh.iet.tsp.core.controller.mapper.JavaOptionalConverter;
-import pl.edu.agh.iet.tsp.core.controller.mapper.LocalDateTimeConverter;
-import pl.edu.agh.iet.tsp.core.controller.mapper.ObjectIdConverter;
+import pl.edu.agh.iet.tsp.web.controller.mapper.JavaOptionalConverter;
+import pl.edu.agh.iet.tsp.web.controller.mapper.LocalDateTimeConverter;
+import pl.edu.agh.iet.tsp.web.controller.mapper.ObjectIdConverter;
 
 import java.util.Arrays;
 

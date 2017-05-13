@@ -1,4 +1,4 @@
-package pl.edu.agh.iet.tsp.core.controller;
+package pl.edu.agh.iet.tsp.web.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;

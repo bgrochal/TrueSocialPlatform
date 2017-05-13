@@ -1,4 +1,4 @@
-package pl.edu.agh.iet.tsp.core.security;
+package pl.edu.agh.iet.tsp.web.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.UserInfoTokenServices;

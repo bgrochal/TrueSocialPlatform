@@ -1,4 +1,4 @@
-package pl.edu.agh.iet.tsp.core;
+package pl.edu.agh.iet.tsp.web;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

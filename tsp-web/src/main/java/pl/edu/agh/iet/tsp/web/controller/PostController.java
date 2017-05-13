@@ -1,13 +1,13 @@
-package pl.edu.agh.iet.tsp.core.controller;
+package pl.edu.agh.iet.tsp.web.controller;
 
 import org.apache.http.client.utils.URIBuilder;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import pl.edu.agh.iet.tsp.core.config.ApplicationConfig.AppConfig;
-import pl.edu.agh.iet.tsp.core.controller.json.IdWrapper;
-import pl.edu.agh.iet.tsp.core.controller.json.PagedResult;
-import pl.edu.agh.iet.tsp.core.controller.json.PostCreation;
+import pl.edu.agh.iet.tsp.web.config.ApplicationConfig.AppConfig;
+import pl.edu.agh.iet.tsp.web.controller.json.IdWrapper;
+import pl.edu.agh.iet.tsp.web.controller.json.PagedResult;
+import pl.edu.agh.iet.tsp.web.controller.json.PostCreation;
 import pl.edu.agh.iet.tsp.database.domain.Post;
 import pl.edu.agh.iet.tsp.service.PostService;
 import pl.edu.agh.iet.tsp.service.exception.NoSuchPostException;
