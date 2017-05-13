@@ -16,6 +16,7 @@ import pl.edu.agh.iet.tsp.web.controller.json.IdWrapper;
 import java.security.Principal;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * @author Bartłomiej Grochal
@@ -39,7 +40,14 @@ public class UserController {
         userInfo.put("email", authenticatedUserDetails.get("email"));
 
         if (userInfo.get("email") != null) {
-            handleAuthenticatedUser(userInfo.get("email"));
+            try {
+                handleAuthenticatedUser(userInfo.get("email"));
+            } catch (DuplicateUsernameException e) {
+                userInfo.put("errorMessage", "Unexpected error occurred while creating database entry for given user.");
+                return ResponseEntity
+                        .status(HttpStatus.CONFLICT)
+                        .body(userInfo);
+            }
             return ResponseEntity.ok(userInfo);
         }
 
@@ -49,14 +57,20 @@ public class UserController {
                 .body(userInfo);
     }
 
-    private void handleAuthenticatedUser(String userName) {
-        // TODO: Check if the user exists in the database. If not, create new entity.
-    }
-
     @RequestMapping(value = "/users", method = RequestMethod.POST)
     public IdWrapper addUser(@RequestParam String username) throws DuplicateUsernameException {
         User user = new User(username);
         return new IdWrapper(userService.addUser(user));
+    }
+
+
+    private IdWrapper handleAuthenticatedUser(String userName) throws DuplicateUsernameException {
+        Optional<User> user = userService.getUser(userName);
+        if (!user.isPresent()) {
+            User newUser = new User(userName);
+            return new IdWrapper(userService.addUser(newUser));
+        }
+        return new IdWrapper(user.get().getId());
     }
 
 }

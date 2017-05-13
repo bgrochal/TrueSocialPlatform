@@ -17,9 +17,20 @@ public class User {
 
     private final String username;
 
+
+    public User() {
+        this(null, null);
+    }
+
+    public User(ObjectId id, String username) {
+        this(username);
+        this.id = id;
+    }
+
     public User(String username) {
         this.username = username;
     }
+
 
     public ObjectId getId() {
         return id;
@@ -28,4 +39,5 @@ public class User {
     public String getUsername() {
         return username;
     }
+
 }

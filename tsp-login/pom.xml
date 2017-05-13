@@ -18,10 +18,10 @@
     <name>True Social Platform - login module</name>
 
     <dependencies>
-        <!-- True Social Platform - database module -->
+        <!-- True Social Platform - service module -->
         <dependency>
             <groupId>pl.edu.agh.iet</groupId>
-            <artifactId>tsp-database</artifactId>
+            <artifactId>tsp-service</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
 

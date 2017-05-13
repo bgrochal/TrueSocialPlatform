@@ -9,6 +9,8 @@ import pl.edu.agh.iet.tsp.database.domain.User;
 import pl.edu.agh.iet.tsp.service.UserService;
 import pl.edu.agh.iet.tsp.service.exception.DuplicateUsernameException;
 
+import java.util.Optional;
+
 /**
  * @author Wojciech Pachuta.
  */
@@ -17,6 +19,12 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserDao userDao;
+
+
+    @Override
+    public Optional<User> getUser(String username) {
+        return userDao.findByUsername(username);
+    }
 
     @Override
     public ObjectId addUser(User user) throws DuplicateUsernameException {
@@ -28,4 +36,5 @@ public class UserServiceImpl implements UserService {
         }
         return user.getId();
     }
+
 }

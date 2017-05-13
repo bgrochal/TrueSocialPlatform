@@ -4,9 +4,15 @@ import org.bson.types.ObjectId;
 import pl.edu.agh.iet.tsp.database.domain.User;
 import pl.edu.agh.iet.tsp.service.exception.DuplicateUsernameException;
 
+import java.util.Optional;
+
 /**
  * @author Wojciech Pachuta.
  */
 public interface UserService {
+
+    Optional<User> getUser(String username);
+
     ObjectId addUser(User user) throws DuplicateUsernameException;
+
 }
