@@ -17,16 +17,13 @@
 
     <name>True Social Platform - service module</name>
 
-
     <dependencies>
-
         <!-- True Social Platform - database module -->
         <dependency>
             <groupId>pl.edu.agh.iet</groupId>
             <artifactId>tsp-database</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
-
     </dependencies>
 
 </project>
