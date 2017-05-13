@@ -6,6 +6,7 @@ Technology stack: Java, Spring framework.
 You need to have the following tools installed:
  - Java SE 1.8 (tested on 1.8.0_121)
  - Apache Maven (tested on 3.3.9)
+ - MongoDB database server (tested on 3.2.10)
 
 ## Installation and Commissioning
 To set up whole infrastructure and deploy the application to the local Tomcat server, simpy type:
