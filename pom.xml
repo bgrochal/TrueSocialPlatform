@@ -29,9 +29,10 @@
 
 
     <modules>
-        <module>tsp-core</module>
+        <module>tsp-web</module>
         <module>tsp-database</module>
         <module>tsp-login</module>
+        <module>tsp-service</module>
     </modules>
 
     <build>
