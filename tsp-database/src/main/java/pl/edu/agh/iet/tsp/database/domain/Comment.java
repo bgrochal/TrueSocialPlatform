@@ -27,26 +27,28 @@ public class Comment {
     private final String content;
     private final LocalDateTime lastModificationTime;
 
+
     public Comment(){
         this(null, null, null, null, null, null);
     }
 
     public Comment(ObjectId authorId, ObjectId postId, LocalDateTime creationTime, String content) {
-        this.authorId = authorId;
-        this.postId = postId;
-        this.creationTime = creationTime;
-        this.content = content;
-        this.lastModificationTime = null;
+        this(authorId, postId, creationTime, content, null);
     }
 
     public Comment(ObjectId id, ObjectId authorId, ObjectId postId, LocalDateTime creationTime, String content, LocalDateTime lastModificationTime) {
+        this(authorId, postId, creationTime, content, lastModificationTime);
         this.id = id;
+    }
+
+    private Comment(ObjectId authorId, ObjectId postId, LocalDateTime creationTime, String content, LocalDateTime lastModificationTime) {
         this.authorId = authorId;
         this.postId = postId;
         this.creationTime = creationTime;
         this.content = content;
         this.lastModificationTime = lastModificationTime;
     }
+
 
     public ObjectId getId() {
         return id;

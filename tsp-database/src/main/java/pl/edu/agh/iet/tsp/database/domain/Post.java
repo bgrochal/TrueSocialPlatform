@@ -33,21 +33,21 @@ public class Post {
     private final String category;
     private final String content;
 
+
     public Post() {
         this(null, null, null, null, null, null, null);
     }
 
     public Post(ObjectId authorId, LocalDateTime creationTime, String title, String category, String content) {
-        this.authorId = authorId;
-        this.creationTime = creationTime;
-        this.title = title;
-        this.category = category;
-        this.content = content;
-        this.lastModificationTime = null;
+        this(authorId, creationTime, title, category, content, null);
     }
 
     public Post(ObjectId id, ObjectId authorId, LocalDateTime creationTime, String title, String category, String content, LocalDateTime lastModificationTime) {
+        this(authorId, creationTime, title, category, content, lastModificationTime);
         this.id = id;
+    }
+
+    private Post(ObjectId authorId, LocalDateTime creationTime, String title, String category, String content, LocalDateTime lastModificationTime) {
         this.authorId = authorId;
         this.creationTime = creationTime;
         this.title = title;
@@ -55,6 +55,7 @@ public class Post {
         this.content = content;
         this.lastModificationTime = lastModificationTime;
     }
+
 
     public ObjectId getId() {
         return id;
