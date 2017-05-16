@@ -5,6 +5,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.oauth2.client.token.grant.code.AuthorizationCodeResourceDetails;
+import pl.edu.agh.iet.tsp.database.domain.AuthenticationData;
 import pl.edu.agh.iet.tsp.login.oauth2.config.ClientConfiguration;
 
 /**
@@ -12,6 +13,11 @@ import pl.edu.agh.iet.tsp.login.oauth2.config.ClientConfiguration;
  */
 @Configuration
 public class FacebookClientConfiguration implements ClientConfiguration {
+
+    @Override
+    public AuthenticationData.AuthenticationProvider getAuthenticationProvider() {
+        return AuthenticationData.AuthenticationProvider.FACEBOOK;
+    }
 
     @Override
     public AuthorizationCodeResourceDetails getClientProperties() {
