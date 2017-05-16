@@ -2,6 +2,8 @@ package pl.edu.agh.iet.tsp.database.domain;
 
 import org.mongodb.morphia.annotations.Embedded;
 
+import java.util.Map;
+
 /**
  * @author Bartłomiej Grochal
  */
@@ -35,7 +37,35 @@ public class AuthenticationData {
 
 
     public enum AuthenticationProvider {
-        FACEBOOK, GITHUB, GOOGLE
+        FACEBOOK {
+            @Override
+            public String getOAuthUniqueIdentifier(Map<String, Object> authenticatedUserDetails) {
+                // Value of the "id" field is actually a String.
+                return (String) authenticatedUserDetails.get("id");
+            }
+        },
+        GITHUB {
+            @Override
+            public String getOAuthUniqueIdentifier(Map<String, Object> authenticatedUserDetails) {
+                // Value of the "id" field is actually an Integer.
+                return String.valueOf(authenticatedUserDetails.get("id"));
+            }
+        },
+        GOOGLE {
+            @Override
+            public String getOAuthUniqueIdentifier(Map<String, Object> authenticatedUserDetails) {
+                // Value of the "id" field is actually a String.
+                return (String) authenticatedUserDetails.get("sub");
+            }
+        };
+
+
+        public abstract String getOAuthUniqueIdentifier(Map<String, Object> authenticatedUserDetails);
+
+        public String getOAuthFullName(Map<String, Object> authenticatedUserDetails) {
+            return (String) authenticatedUserDetails.get("name");
+        }
+
     }
 
 }
