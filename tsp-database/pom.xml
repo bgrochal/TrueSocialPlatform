@@ -18,7 +18,7 @@
     <name>True Social Platform - database module</name>
 
     <dependencies>
-        <!-- Morphia -->
+        <!-- https://mvnrepository.com/artifact/org.mongodb.morphia/morphia -->
         <dependency>
             <groupId>org.mongodb.morphia</groupId>
             <artifactId>morphia</artifactId>
