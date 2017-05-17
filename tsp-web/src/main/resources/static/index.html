@@ -14,21 +14,84 @@
     <!-- jQuery -->
     <script type="text/javascript" src="/webjars/jquery/3.2.0/jquery.min.js"></script>
 
+    <!-- Tether -->
+    <link rel="stylesheet" type="text/css" href="webjars/tether/1.4.0/dist/css/tether.min.css"/>
+    <script type="text/javascript" src="webjars/tether/1.4.0/dist/js/tether.min.js"></script>
+
     <!-- Bootstrap -->
-    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css"/>
-    <script type="text/javascript" src="/webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/4.0.0-alpha.6-1/css/bootstrap.min.css"/>
+    <script type="text/javascript" src="/webjars/bootstrap/4.0.0-alpha.6-1/js/bootstrap.min.js"></script>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="webjars/font-awesome/4.7.0/css/font-awesome.min.css"/>
 
     <!-- AngularJS -->
-    <script type="text/javascript" src="/webjars/angularjs/1.6.2/angular.min.js"></script>
+    <script type="text/javascript" src="/webjars/angularjs/1.6.4/angular.min.js"></script>
+    <script type="text/javascript" src="/webjars/angular-route/1.6.4/angular-route.min.js"></script>
 
     <!-- Custom JS scripts -->
     <script type="text/javascript" src="js/angularMain.js"></script>
-    <script type="text/javascript" src="js/loginController.js"></script>
+    <script type="text/javascript" src="js/router.js"></script>
+
+    <script type="text/javascript" src="js/controller/loginController.js"></script>
+    <script type="text/javascript" src="js/controller/newsController.js"></script>
+    <script type="text/javascript" src="js/controller/newUserController.js"></script>
+    <script type="text/javascript" src="js/controller/userController.js"></script>
+
+    <!-- Custom CSS stylesheets -->
+    <link rel="stylesheet" href="css/main.css"/>
 </head>
 
-<body ng-app="app">
-    <h1>True Social Platform</h1>
-    <div ng-include="'login.html'" ng-controller="loginController"></div>
+<body ng-app="app" ng-controller="loginController" ng-cloak class="ng-cloak">
+
+    <nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse fixed-top">
+        <div class="collapse navbar-collapse" id="tspNavbar">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Home</a>
+                </li>
+
+                <!-- For authenticated users only -->
+                <li class="nav-item" ng-show="authenticated">
+                    <a class="nav-link" href="/user">Panel</a>
+                </li>
+                <li class="nav-item" ng-show="authenticated">
+                    <a class="nav-link" ng-click="logout()">Logout</a>
+                </li>
+
+                <!-- For unauthenticated users only -->
+                <li class="nav-item" ng-show="!authenticated">
+                    <a class="nav-link" href="/login/facebook" target="_self"><i class="fa fa-facebook-official fa-fw" aria-hidden="true"></i></a>
+                </li>
+                <li class="nav-item" ng-show="!authenticated">
+                    <a class="nav-link" href="/login/github" target="_self"><i class="fa fa-github-square fa-fw" aria-hidden="true"></i></a>
+                </li>
+                <li class="nav-item" ng-show="!authenticated">
+                    <a class="nav-link" href="/login/google" target="_self"><i class="fa fa-google-plus-square fa-fw" aria-hidden="true"></i></a>
+                </li>
+            </ul>
+            <ul class="navbar-nav" ng-show="authenticated">
+                <li class="nav-item">
+                    <p class="navbar-text" style="font-size: 14px;" ng-show="!usernameWarning">Signed in as {{user}}.</p>
+                    <div class="alert alert-warning" style="margin: 0;" ng-show="usernameWarning">
+                        <i class="fa fa-exclamation-triangle"></i>
+                        <p>{{usernameWarning}}</p>
+                    </div>
+                </li>
+            </ul>
+            <ul class="navbar-nav" ng-show="!authenticated">
+                <li class="nav-item">
+                    <div class="alert alert-danger" style="margin: 0;" ng-show="loginError">
+                        <i class="fa fa-exclamation-triangle"></i>
+                        <p>{{loginError}}</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div ng-view class="container centered-container"></div>
+
 </body>
 
 </html>
