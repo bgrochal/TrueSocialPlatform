@@ -44,14 +44,4 @@ public class UserController {
         return new IdWrapper(userService.addUser(user));
     }
 
-    @RequestMapping(value = "/user/new", method = RequestMethod.GET)
-    public String showNewUser() {
-        return "forward:/";
-    }
-
-    @RequestMapping(value = "/user", method = RequestMethod.GET)
-    public String showUser() {
-        return "forward:/";
-    }
-
 }
