@@ -1,43 +1,49 @@
-package pl.edu.agh.iet.tsp.login.oauth2.configuration.google;
+package pl.edu.agh.iet.tsp.login.oauth2.config.facebook;
 
 import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.oauth2.client.token.grant.code.AuthorizationCodeResourceDetails;
-import pl.edu.agh.iet.tsp.login.oauth2.configuration.ClientConfiguration;
+import pl.edu.agh.iet.tsp.database.domain.AuthenticationData;
+import pl.edu.agh.iet.tsp.login.oauth2.config.ClientConfiguration;
 
 /**
  * @author Bartłomiej Grochal
  */
 @Configuration
-public class GoogleClientConfiguration implements ClientConfiguration {
+public class FacebookClientConfiguration implements ClientConfiguration {
+
+    @Override
+    public AuthenticationData.AuthenticationProvider getAuthenticationProvider() {
+        return AuthenticationData.AuthenticationProvider.FACEBOOK;
+    }
 
     @Override
     public AuthorizationCodeResourceDetails getClientProperties() {
-        return getGoogleClientProperties();
+        return getFacebookClientProperties();
     }
 
     @Override
     public ResourceServerProperties getResourceProperties() {
-        return getGoogleResourceProperties();
+        return getFacebookResourceProperties();
     }
 
     @Override
     public String getLoginEndpoint() {
-        return "/login/google";
+        return "/login/facebook";
     }
 
 
     @Bean
-    @ConfigurationProperties("google.client")
-    public AuthorizationCodeResourceDetails getGoogleClientProperties() {
+    @ConfigurationProperties("facebook.client")
+    public AuthorizationCodeResourceDetails getFacebookClientProperties() {
         return new AuthorizationCodeResourceDetails();
     }
 
     @Bean
-    @ConfigurationProperties("google.resource")
-    public ResourceServerProperties getGoogleResourceProperties() {
+    @ConfigurationProperties("facebook.resource")
+    public ResourceServerProperties getFacebookResourceProperties() {
         return new ResourceServerProperties();
     }
 

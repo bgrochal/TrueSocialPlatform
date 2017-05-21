@@ -32,8 +32,6 @@ google:
     userAuthorizationUri: https://accounts.google.com/o/oauth2/v2/auth
     clientAuthenticationScheme: form
     scope:
-      - openid
-      - email
       - profile
   resource:
     userInfoUri: https://www.googleapis.com/oauth2/v3/userinfo

@@ -9,7 +9,12 @@ You need to have the following tools installed:
  - MongoDB database server (tested on 3.2.10)
 
 ## Installation and Commissioning
-To set up whole infrastructure and deploy the application to the local Tomcat server, simpy type:
+Start your MongoDB server. This may be done by typing (in the project root directory):
+```
+mkdir db                    # Creating directory for storing data
+mongod --dbpath ./db        # Starting MongoDB server
+```
+To set up whole infrastructure and deploy the application to the local Tomcat server, simply type:
 ```
 mvn package
 ```

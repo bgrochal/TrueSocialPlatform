@@ -1,4 +1,4 @@
-package pl.edu.agh.iet.tsp.login.oauth2.configuration;
+package pl.edu.agh.iet.tsp.login.oauth2.config;
 
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;

@@ -1,0 +1,44 @@
+body {
+    padding-top: 5rem;
+}
+
+/** Navigation bar **/
+.nav-item .fa-facebook-official:hover {
+    color: #3b5998;
+}
+
+.nav-item .fa-github-square:hover {
+    color: #6e5494;
+}
+
+.nav-item .fa-google-plus-square:hover {
+    color: #d34836;
+}
+
+.nav-item a {
+    cursor: pointer;
+}
+
+nav {
+    font-size: 20px;
+}
+
+
+/** Main container **/
+
+.centered-container {
+    padding: 3rem 1.5rem;
+    text-align: center;
+}
+
+
+/** Alerts **/
+
+.alert {
+    margin: 20px;
+    font-size: 14px;
+}
+
+.alert * {
+    display: inline;
+}
