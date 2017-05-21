@@ -42,3 +42,19 @@ nav {
 .alert * {
     display: inline;
 }
+
+
+/** User's panel submenu **/
+.panel-menu .nav-link {
+    color: #292b2c;
+}
+
+.tab-content > div {
+    margin-top: 20px;
+}
+
+
+/** Common templates **/
+.page-header {
+    margin-bottom: 50px;
+}
