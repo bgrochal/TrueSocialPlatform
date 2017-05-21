@@ -31,6 +31,8 @@ public class UserController {
         HashMap<String, String> currentUserDetails = new HashMap<>();
         currentUserDetails.put("name", authenticatedUserDetails.getFullName());
         currentUserDetails.put("username", authenticatedUserDetails.getDomainUser().getUsername());
+        currentUserDetails.put("_id", authenticatedUserDetails.getDomainUser().getId() != null ?
+                authenticatedUserDetails.getDomainUser().getId().toHexString() : null);
 
         return currentUserDetails;
     }

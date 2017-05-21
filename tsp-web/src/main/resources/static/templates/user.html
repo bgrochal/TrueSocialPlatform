@@ -25,7 +25,34 @@
         </div>
 
         <div id="newPost" class="tab-pane fade" role="tabpanel">
-            <p>test 2</p>
+            <div class="row">
+                <form name="newPostForm" class="col-sm-6 offset-sm-3" ng-submit="newPostSubmit()">
+                    <div class="form-group row">
+                        <label for="postTitle" class="col-sm-2 col-form-label">Title</label>
+                        <input type="text" class="col-sm-10 form-control" id="postTitle" ng-model="newPost.title" required>
+                    </div>
+                    <div class="form-group row">
+                        <label for="postCategory" class="col-sm-2 col-form-label">Category</label>
+                        <input type="text" class="col-sm-10 form-control" id="postCategory" ng-model="newPost.category" required>
+                    </div>
+                    <div class="form-group row">
+                        <label for="postContent" class="col-sm-2 col-form-label">Content</label>
+                        <textarea class="col-sm-10 form-control" id="postContent" ng-model="newPost.content" required></textarea>
+                    </div>
+                    <div class="row pull-right">
+                        <input type="submit" name="submit" id="submit" value="Submit" class="btn btn-primary">
+                    </div>
+                </form>
+            </div>
+
+            <div class="alert alert-warning" ng-show="newPostError">
+                <i class="fa fa-exclamation-triangle"></i>
+                <p>{{newPostError}}</p>
+            </div>
+            <div class="alert alert-success" ng-show="newPostSuccess">
+                <i class="fa fa-info"></i>
+                <p>{{newPostSuccess}}</p>
+            </div>
         </div>
 
         <div id="myPosts" class="tab-pane fade" role="tabpanel">
