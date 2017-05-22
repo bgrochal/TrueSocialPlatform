@@ -54,6 +54,46 @@ nav {
 }
 
 
+/** Posts **/
+textarea {
+    min-height: 100px;
+}
+
+.jumbotron.post {
+    padding: 20px;
+}
+
+.jumbotron.post p.metadata {
+    font-size: 12px;
+}
+
+.comment {
+    border-left: 0.25em solid #8a8e91;
+    margin-left: 20px;
+}
+
+.post-icon {
+    padding: 20px;
+    cursor: pointer;
+}
+
+.post-icon.remove-post:hover {
+    color: #c9302c;
+}
+
+.post-icon.edit-post:hover {
+    color: #ec971f;
+}
+
+.post-icon.show-comments:hover {
+    color: #449d44;
+}
+
+.post-icon.get-more-comments:hover {
+    color: #31b0d5;
+}
+
+
 /** Common templates **/
 .page-header {
     margin-bottom: 50px;

@@ -1,16 +1,17 @@
 <h1 class="page-header">True Social Platform | Panel</h1>
 <div>
+    <!-- PANEL'S MENU -->
     <ul class="nav nav-tabs nav-fill panel-menu" role="tablist">
         <li class="nav-item">
             <a href="#home" target="_self" data-toggle="tab" class="nav-link active" role="tab">
                 <i class="fa fa-home"></i> Home</a>
         </li>
         <li class="nav-item preventable">
-            <a href="#newPost" target="_self" data-toggle="tab" class="nav-link" role="tab">
+            <a href="#newPost" target="_self" data-toggle="tab" class="nav-link" role="tab" ng-click="clearAlerts()">
                 <i class="fa fa-plus"></i> Add post</a>
         </li>
         <li class="nav-item preventable">
-            <a href="#myPosts" target="_self" data-toggle="tab" class="nav-link" role="tab">
+            <a href="#myPosts" target="_self" data-toggle="tab" class="nav-link" role="tab" ng-click="getLatestPosts()">
                 <i class="fa fa-files-o"></i> Posts</a>
         </li>
         <li class="nav-item preventable">
@@ -19,33 +20,39 @@
         </li>
     </ul>
 
+    <!-- CONTENT OF THE PANEL'S MENU ITEMS -->
     <div class="tab-content">
+
+        <!-- "HOME" MENU ITEM -->
         <div id="home" class="tab-pane fade active show" role="tabpanel">
             <p>{{welcomeMessage}}</p>
         </div>
 
+        <!-- "ADD POST" MENU ITEM -->
         <div id="newPost" class="tab-pane fade" role="tabpanel">
-            <div class="row">
-                <form name="newPostForm" class="col-sm-6 offset-sm-3" ng-submit="newPostSubmit()">
-                    <div class="form-group row">
-                        <label for="postTitle" class="col-sm-2 col-form-label">Title</label>
-                        <input type="text" class="col-sm-10 form-control" id="postTitle" ng-model="newPost.title" required>
+            <form id="newPostForm" name="newPostForm" class="col-sm-6 offset-sm-3" ng-submit="newPostSubmit()">
+                <div class="form-group row">
+                    <label for="postTitle" class="col-sm-2 col-form-label">Title</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="postTitle" ng-model="newPost.title" required>
                     </div>
-                    <div class="form-group row">
-                        <label for="postCategory" class="col-sm-2 col-form-label">Category</label>
-                        <input type="text" class="col-sm-10 form-control" id="postCategory" ng-model="newPost.category" required>
+                </div>
+                <div class="form-group row">
+                    <label for="postCategory" class="col-sm-2 col-form-label">Category</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="postCategory" ng-model="newPost.category" required>
                     </div>
-                    <div class="form-group row">
-                        <label for="postContent" class="col-sm-2 col-form-label">Content</label>
-                        <textarea class="col-sm-10 form-control" id="postContent" ng-model="newPost.content" required></textarea>
+                </div>
+                <div class="form-group row">
+                    <label for="postContent" class="col-sm-2 col-form-label">Content</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" id="postContent" ng-model="newPost.content" required></textarea>
                     </div>
-                    <div class="row pull-right">
-                        <input type="submit" name="submit" id="submit" value="Submit" class="btn btn-primary">
-                    </div>
-                </form>
-            </div>
+                </div>
+                <input type="submit" name="submit" id="submit" value="Submit" class="btn btn-primary col-sm-2 offset-sm-10">
+            </form>
 
-            <div class="alert alert-warning" ng-show="newPostError">
+            <div class="alert alert-danger" ng-show="newPostError">
                 <i class="fa fa-exclamation-triangle"></i>
                 <p>{{newPostError}}</p>
             </div>
@@ -55,12 +62,103 @@
             </div>
         </div>
 
-        <div id="myPosts" class="tab-pane fade" role="tabpanel" ng-init="getAllPosts()">
-            <p>test 3</p>
+        <!-- "POSTS" MENU ITEM -->
+        <div id="myPosts" class="tab-pane fade" role="tabpanel">
+            <div class="jumbotron post clearfix" ng-repeat="post in allPosts">
+                <!-- DISPLAYING POST'S CONTENT AND ATTRIBUTES -->
+                <div class="row">
+                    <!-- TODO: Change authorId to the author's username. -->
+                    <p class="col-sm-4 metadata">Author: {{post.authorId}}</p>
+                    <p class="col-sm-4 metadata">Category: {{post.category}}</p>
+                    <p class="col-sm-4 metadata">Created: {{post.creationTime | date : "dd.MM.yyyy; HH:mm"}}
+                        <span ng-show="post.lastModificationTime">(modified: {{post.lastModificationTime | date : "dd.MM.yyyy; HH:mm"}})</span>
+                    </p>
+                </div>
+                <p class="text-center"><strong>{{post.title}}</strong></p>
+                <p class="text-justify" style="margin-bottom: 50px;">{{post.content}}</p>
+
+                <!-- DISPLAYING COMMENTS TO THE POST -->
+                <div>
+                    <div class="comment" ng-repeat="comment in post.comments">
+                        <div class="row">
+                            <!-- TODO: Change authorId to the author's username. -->
+                            <p class="col-sm-4 metadata">Author: {{comment.authorId}}</p>
+                            <p class="col-sm-4 offset-sm-4 metadata">Created: {{comment.creationTime | date : "dd.MM.yyyy; HH:mm"}}
+                                <span ng-show="post.lastModificationTime">(modified: {{comment.lastModificationTime | date : "dd.MM.yyyy; HH:mm"}})</span></p>
+                        </div>
+                        <p class="text-justify" style="margin-left: 20px;">{{comment.content}}</p>
+                    </div>
+                </div>
+
+                <!-- DISPLAYING MANAGEMENT BUTTONS -->
+                <i class="fa fa-remove fa-2x post-icon remove-post" ng-click="deletePost(post.id)"></i>
+                <i class="fa fa-edit fa-2x post-icon edit-post" ng-click="editPost(post)"></i>
+                <i class="fa fa-commenting fa-2x post-icon show-comments" ng-click="getCommentsToPost(post)"
+                   ng-show="!post.comments"></i>
+                <!-- TODO: This one does not work, because the response.data.next is null. Probably it's a backend-related problem -->
+                <i class="fa fa-ellipsis-h fa-2x post-icon get-more-comments" ng-click="getMoreCommentsToPost(post)"
+                   ng-show="post.nextComments"></i>
+            </div>
+
+            <!-- DISPLAYING ALERTS -->
+            <div class="alert alert-danger" ng-show="latestPostsError">
+                <i class="fa fa-exclamation-triangle"></i>
+                <p>{{latestPostsError}}</p>
+            </div>
+            <div class="alert alert-danger" ng-show="commentsToPostError">
+                <i class="fa fa-exclamation-triangle"></i>
+                <p>{{commentsToPostError}}</p>
+            </div>
+
+            <!-- "MORE POSTS" BUTTON -->
+            <button type="button" class="btn btn-info" ng-click="getMorePosts()" ng-show="hasMorePosts">More posts</button>
         </div>
 
+        <!-- "COMMENTS" MENU ITEM -->
         <div id="myComments" class="tab-pane fade" role="tabpanel">
             <p>test 4</p>
+        </div>
+    </div>
+
+
+    <!-- MODAL FOR POSTS EDITION -->
+    <div class="modal fade" id="editPostModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4>Edit post</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <div class="modal-body">
+                    <form id="editPostForm" name="editPostForm" ng-submit="editPostSubmit()">
+                        <div class="form-group row">
+                            <label for="editedPostTitle" class="col-sm-3 offset-sm-1 col-form-label">Title</label>
+                            <div class="col-sm-7">
+                                <input type="text" class="form-control" id="editedPostTitle" ng-model="editedPost.title" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="editedPostCategory" class="col-sm-3 offset-sm-1 col-form-label">Category</label>
+                            <div class="col-sm-7">
+                                <input type="text" class="form-control" id="editedPostCategory" ng-model="editedPost.category" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="editedPostContent" class="col-sm-3 offset-sm-1 col-form-label">Content</label>
+                            <div class="col-sm-7">
+                                <textarea class="form-control" id="editedPostContent" ng-model="editedPost.content" required></textarea>
+                            </div>
+                        </div>
+                        <input type="submit" name="submitEditedPost" id="submitEditedPost" value="Submit" class="btn btn-primary col-sm-3 offset-sm-7">
+                    </form>
+
+                    <div class="alert alert-danger" ng-show="editedPostError">
+                        <i class="fa fa-exclamation-triangle"></i>
+                        <p>{{editedPostError}}</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
