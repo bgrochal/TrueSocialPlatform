@@ -15,7 +15,7 @@
                 <i class="fa fa-files-o"></i> Posts</a>
         </li>
         <li class="nav-item preventable">
-            <a href="#myComments" target="_self" data-toggle="tab" class="nav-link" role="tab">
+            <a href="#myComments" target="_self" data-toggle="tab" class="nav-link" role="tab" ng-click="getLatestComments()">
                 <i class="fa fa-comments"></i> Comments</a>
         </li>
     </ul>
@@ -84,19 +84,18 @@
                             <!-- TODO: Change authorId to the author's username. -->
                             <p class="col-sm-4 metadata">Author: {{comment.authorId}}</p>
                             <p class="col-sm-4 offset-sm-4 metadata">Created: {{comment.creationTime | date : "dd.MM.yyyy; HH:mm"}}
-                                <span ng-show="post.lastModificationTime">(modified: {{comment.lastModificationTime | date : "dd.MM.yyyy; HH:mm"}})</span></p>
+                                <span ng-show="comment.lastModificationTime">(modified: {{comment.lastModificationTime | date : "dd.MM.yyyy; HH:mm"}})</span></p>
                         </div>
                         <p class="text-justify" style="margin-left: 20px;">{{comment.content}}</p>
                     </div>
                 </div>
 
                 <!-- DISPLAYING MANAGEMENT BUTTONS -->
-                <i class="fa fa-remove fa-2x post-icon remove-post" ng-click="deletePost(post.id)"></i>
-                <i class="fa fa-edit fa-2x post-icon edit-post" ng-click="editPost(post)"></i>
-                <i class="fa fa-commenting fa-2x post-icon show-comments" ng-click="getCommentsToPost(post)"
+                <i class="fa fa-remove fa-2x jumbotron-icon remove" ng-click="deletePost(post.id)"></i>
+                <i class="fa fa-edit fa-2x jumbotron-icon edit" ng-click="editPost(post)"></i>
+                <i class="fa fa-commenting fa-2x jumbotron-icon show-comments" ng-click="getCommentsToPost(post)"
                    ng-show="!post.comments"></i>
-                <!-- TODO: This one does not work, because the response.data.next is null. Probably it's a backend-related problem -->
-                <i class="fa fa-ellipsis-h fa-2x post-icon get-more-comments" ng-click="getMoreCommentsToPost(post)"
+                <i class="fa fa-ellipsis-h fa-2x jumbotron-icon get-more-comments" ng-click="getMoreCommentsToPost(post)"
                    ng-show="post.nextComments"></i>
             </div>
 
@@ -116,7 +115,36 @@
 
         <!-- "COMMENTS" MENU ITEM -->
         <div id="myComments" class="tab-pane fade" role="tabpanel">
-            <p>test 4</p>
+            <div class="jumbotron clearfix" ng-repeat="comment in allComments">
+                <!-- DISPLAYING COMMENT'S CONTENT AND ATTRIBUTES -->
+                <div class="comment">
+                    <div class="row">
+                        <!-- TODO: Change authorId to the author's username. -->
+                        <p class="col-sm-4 metadata">Author: {{comment.authorId}}</p>
+                        <p class="col-sm-4 offset-sm-4 metadata">Created: {{comment.creationTime | date : "dd.MM.yyyy; HH:mm"}}
+                            <span ng-show="comment.lastModificationTime">(modified: {{comment.lastModificationTime | date : "dd.MM.yyyy; HH:mm"}})</span></p>
+                    </div>
+                    <p class="text-justify" style="margin-left: 20px;">{{comment.content}}</p>
+                </div>
+
+                <!-- DISPLAYING MANAGEMENT BUTTONS -->
+                <i class="fa fa-remove fa-2x jumbotron-icon remove" ng-click="deleteComment(comment.id)"></i>
+                <i class="fa fa-edit fa-2x jumbotron-icon edit" ng-click="editComment(comment)"></i>
+                <i class="fa fa-file-text fa-2x jumbotron-icon show-post" ng-click="getPostToComment(comment)"></i>
+            </div>
+
+            <!-- DISPLAYING ALERTS -->
+            <div class="alert alert-danger" ng-show="latestCommentsError">
+                <i class="fa fa-exclamation-triangle"></i>
+                <p>{{latestCommentsError}}</p>
+            </div>
+            <div class="alert alert-danger" ng-show="postToCommentError">
+                <i class="fa fa-exclamation-triangle"></i>
+                <p>{{postToCommentError}}</p>
+            </div>
+
+            <!-- "MORE COMMENTS" BUTTON -->
+            <button type="button" class="btn btn-info" ng-click="getMoreComments()" ng-show="hasMoreComments">More comments</button>
         </div>
     </div>
 
@@ -157,6 +185,56 @@
                         <i class="fa fa-exclamation-triangle"></i>
                         <p>{{editedPostError}}</p>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL FOR COMMENTS EDITION -->
+    <div class="modal fade" id="editCommentModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4>Edit comment</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <div class="modal-body">
+                    <form id="editCommentForm" name="editCommentForm" ng-submit="editCommentSubmit()">
+                        <div class="form-group row">
+                            <label for="editedCommentContent" class="col-sm-3 offset-sm-1 col-form-label">Content</label>
+                            <div class="col-sm-7">
+                                <textarea class="form-control" id="editedCommentContent" ng-model="editedComment.content" required></textarea>
+                            </div>
+                        </div>
+                        <input type="submit" name="submitEditedComment" id="submitEditedComment" value="Submit" class="btn btn-primary col-sm-3 offset-sm-7">
+                    </form>
+
+                    <div class="alert alert-danger" ng-show="editedCommentError">
+                        <i class="fa fa-exclamation-triangle"></i>
+                        <p>{{editedCommentError}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL FOR SHOWING POST TO COMMENT -->
+    <div class="modal fade" id="postToCommentModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4>Post</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <div class="modal-body">
+                    <p class="metadata text-left">Author: {{postToCurrentComment.authorId}}</p>
+                    <p class="metadata text-left">Category: {{postToCurrentComment.category}}</p>
+                    <p class="metadata text-left">Created: {{postToCurrentComment.creationTime | date : "dd.MM.yyyy; HH:mm"}}
+                        <span ng-show="postToCurrentComment.lastModificationTime">(modified: {{postToCurrentComment.lastModificationTime | date : "dd.MM.yyyy; HH:mm"}})</span></p>
+                    <p class="text-center"><strong>{{postToCurrentComment.title}}</strong></p>
+                    <p class="text-justify" style="margin-bottom: 50px;">{{postToCurrentComment.content}}</p>
                 </div>
             </div>
         </div>

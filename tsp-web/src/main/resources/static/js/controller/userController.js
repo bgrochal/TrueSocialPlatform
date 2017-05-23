@@ -16,6 +16,9 @@ app.controller('userController', ['$scope', '$http', function ($scope, $http) {
         $scope.latestPostsError = null;
         $scope.commentsToPostError = null;
         $scope.editedPostError = null;
+
+        $scope.latestCommentsError = null;
+        $scope.editedCommentError = null;
     };
 
     $scope.newPostSubmit = function () {
@@ -45,6 +48,7 @@ app.controller('userController', ['$scope', '$http', function ($scope, $http) {
         $scope.latestPostsError = null;
         $scope.hasMorePosts = true;
 
+        // TODO: Change to getting posts of current user when the server API will be completed.
         $http({
             url     : '/posts/latest',
             method  : 'GET',
@@ -149,6 +153,106 @@ app.controller('userController', ['$scope', '$http', function ($scope, $http) {
             },
             function (error) {
                 $scope.commentsToPostError = 'Unexpected error: ' + error.status + '.';
+                console.log(error);
+            }
+        );
+    };
+
+    $scope.getLatestComments = function () {
+        $scope.latestCommentsError = null;
+        $scope.hasMoreComments = true;
+
+        // TODO: Change to getting comments of current user when the server API will be completed.
+        $http({
+            url     : '/comments/latest',
+            method  : 'GET',
+            params  : {
+                'postId'    : '5922d5cd9a2ffe1c74acf31b',
+                'number'    : 5
+            }
+        }).then(
+            function (response) {
+                $scope.allComments = response.data.data;
+                $scope.nextCommentsUrl = response.data.next;
+                $scope.hasMoreComments = $scope.nextCommentsUrl != null;
+            },
+            function (error) {
+                $scope.latestCommentsError = 'Unexpected error: ' + error.status + '.';
+                console.log(error);
+            }
+        );
+    };
+
+    $scope.getMoreComments = function () {
+        $http({
+            url     : $scope.nextCommentsUrl,
+            method  : 'GET'
+        }).then(
+            function (response) {
+                $scope.allComments = $scope.allComments.concat(response.data.data);
+                $scope.nextCommentsUrl = response.data.next;
+                $scope.hasMoreComments = $scope.nextCommentsUrl != null;
+            },
+            function (error) {
+                $scope.latestCommentsError = 'Unexpected error: ' + error.status + '.';
+                console.log(error);
+            }
+        );
+    };
+
+    $scope.deleteComment = function (commentId) {
+        // TODO: make a request to the server and put the code below into the successful callback.
+        $scope.allComments = $scope.allComments.filter(function (comment) {
+            return comment.id != commentId;
+        });
+    };
+
+    $scope.editComment = function (comment) {
+        $scope.editedComment = $.extend(true, {}, comment);
+        $('#editCommentModal').modal();
+    };
+
+    $scope.editCommentSubmit = function () {
+        $http({
+            url     : '/comments/' + $scope.editedComment.id,
+            method  : 'PUT',
+            params  : {
+                'authorId'  : $scope.editedComment.authorId,
+                'postId'    : $scope.editedComment.postId
+            },
+            data    : $scope.editedComment
+        }).then(
+            function (response) {
+                $scope.allComments.forEach(function (comment, i) {
+                    if (comment.id == $scope.editedComment.id) {
+                        $scope.allComments[i] = $scope.editedComment;
+                    }
+                });
+
+                $('#editCommentModal').modal('hide');
+            },
+            function (error) {
+                $scope.editedCommentError = 'Unexpected error: ' + error.status + '.';
+                console.log(error);
+            }
+        );
+    };
+
+    $scope.getPostToComment = function (comment) {
+        // TODO: Change to getting the post with given comment.postId when the server API will be completed.
+        $http({
+            url     : '/posts/latest',
+            method  : 'GET',
+            params  : {
+                'number' : 1
+            }
+        }).then(
+            function (response) {
+                $scope.postToCurrentComment = response.data.data[0];
+                $('#postToCommentModal').modal();
+            },
+            function (error) {
+                $scope.postToCommentError = 'Unexpected error: ' + error.status + '.';
                 console.log(error);
             }
         );

@@ -59,11 +59,11 @@ textarea {
     min-height: 100px;
 }
 
-.jumbotron.post {
+.jumbotron {
     padding: 20px;
 }
 
-.jumbotron.post p.metadata {
+p.metadata {
     font-size: 12px;
 }
 
@@ -72,25 +72,29 @@ textarea {
     margin-left: 20px;
 }
 
-.post-icon {
+.jumbotron-icon {
     padding: 20px;
     cursor: pointer;
 }
 
-.post-icon.remove-post:hover {
+.jumbotron-icon.remove:hover {
     color: #c9302c;
 }
 
-.post-icon.edit-post:hover {
+.jumbotron-icon.edit:hover {
     color: #ec971f;
 }
 
-.post-icon.show-comments:hover {
+.jumbotron-icon.show-comments:hover {
     color: #449d44;
 }
 
-.post-icon.get-more-comments:hover {
+.jumbotron-icon.get-more-comments:hover {
     color: #31b0d5;
+}
+
+.jumbotron-icon.show-post:hover {
+    color: #449d44;
 }
 
 
