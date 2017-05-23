@@ -12,7 +12,7 @@ app.controller('loginController', ['$http', '$scope', '$location', function ($ht
                     $scope.usernameWarning = 'User ' + response.data.name + ' does not have any user name provided.'
                 }
 
-                $scope._id = response.data._id;
+                $scope.id = response.data.id;
 
                 $scope.authenticated = true;
                 $scope.user = response.data.name.concat(' (', response.data.username, ')');

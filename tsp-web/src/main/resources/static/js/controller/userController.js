@@ -28,7 +28,7 @@ app.controller('userController', ['$scope', '$http', function ($scope, $http) {
             url     : '/posts',
             method  : 'POST',
             params  : {
-                'authorId' : $scope.$parent._id
+                'authorId' : $scope.$parent.id
             },
             data : $scope.newPost
         }).then(
