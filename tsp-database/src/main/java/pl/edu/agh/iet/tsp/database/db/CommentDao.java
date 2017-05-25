@@ -7,12 +7,11 @@ import pl.edu.agh.iet.tsp.database.domain.Comment;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 /**
  * @author Wojciech Pachuta.
  */
-public interface CommentDao extends DAO<Comment, UUID> {
+public interface CommentDao extends DAO<Comment, ObjectId> {
     Optional<Comment> getComment(ObjectId authorId, ObjectId commentId);
 
     List<Comment> getLatestComments(ObjectId postId, Integer number);
@@ -20,4 +19,14 @@ public interface CommentDao extends DAO<Comment, UUID> {
     List<Comment> getLatestCommentsBefore(ObjectId postId, Integer number, LocalDateTime dateTime);
 
     boolean existsNextPage(ObjectId postId, LocalDateTime dateTime);
+
+    void deleteAllCommentsOfPost(ObjectId objectId);
+
+    List<Comment> getPageOfCommentsByUserBefore(ObjectId authorId, Integer number, LocalDateTime dateTime);
+
+    List<Comment> getFirstPageOfCommentsByUser(ObjectId authorId, Integer number);
+
+    boolean existsNextPageByUser(ObjectId authorId, LocalDateTime dateTime);
+
+    void deleteAllByAuthor(ObjectId authorId);
 }

@@ -1,5 +1,6 @@
 package pl.edu.agh.iet.tsp.database.db.impl;
 
+import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.dao.BasicDAO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,13 +10,12 @@ import pl.edu.agh.iet.tsp.database.domain.AuthenticationData;
 import pl.edu.agh.iet.tsp.database.domain.User;
 
 import java.util.Optional;
-import java.util.UUID;
 
 /**
  * @author Wojciech Pachuta.
  */
 @Repository
-public class UserDaoImpl extends BasicDAO<User, UUID> implements UserDao {
+public class UserDaoImpl extends BasicDAO<User, ObjectId> implements UserDao {
 
     @Autowired
     public UserDaoImpl(Datastore datastore) {

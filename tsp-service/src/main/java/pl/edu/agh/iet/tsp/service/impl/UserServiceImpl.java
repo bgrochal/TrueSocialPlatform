@@ -4,6 +4,8 @@ import com.mongodb.DuplicateKeyException;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import pl.edu.agh.iet.tsp.database.db.CommentDao;
+import pl.edu.agh.iet.tsp.database.db.PostDao;
 import pl.edu.agh.iet.tsp.database.db.UserDao;
 import pl.edu.agh.iet.tsp.database.domain.AuthenticationData;
 import pl.edu.agh.iet.tsp.database.domain.User;
@@ -21,6 +23,11 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserDao userDao;
 
+    @Autowired
+    private CommentDao commentDao;
+
+    @Autowired
+    private PostDao postDao;
 
     @Override
     public Optional<User> getUserByName(String username) {
@@ -41,6 +48,18 @@ public class UserServiceImpl implements UserService {
 
         }
         return user.getId();
+    }
+
+    @Override
+    public void removeUserAndHisContent(ObjectId userId) {
+        commentDao.deleteAllByAuthor(userId);
+        postDao.deleteAllByAuthor(userId);
+        userDao.deleteById(userId);
+    }
+
+    @Override
+    public Optional<String> getUsername(ObjectId userId) {
+        return Optional.ofNullable(userDao.get(userId)).map(User::getUsername);
     }
 
 }

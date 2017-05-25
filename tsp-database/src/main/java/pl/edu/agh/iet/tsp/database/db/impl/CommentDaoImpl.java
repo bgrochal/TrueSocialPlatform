@@ -13,13 +13,12 @@ import pl.edu.agh.iet.tsp.database.domain.Comment;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 /**
  * @author Wojciech Pachuta.
  */
 @Repository
-public class CommentDaoImpl extends BasicDAO<Comment, UUID> implements CommentDao {
+public class CommentDaoImpl extends BasicDAO<Comment, ObjectId> implements CommentDao {
 
     @Autowired
     public CommentDaoImpl(Datastore datastore) {
@@ -58,5 +57,40 @@ public class CommentDaoImpl extends BasicDAO<Comment, UUID> implements CommentDa
                 .field(Comment.POST_ID).equal(postId)
                 .field(Comment.CREATION_TIME).lessThan(dateTime)
                 .get();
+    }
+
+    @Override
+    public void deleteAllCommentsOfPost(ObjectId postId) {
+        getDatastore().delete(createQuery().field(Comment.POST_ID).equal(postId));
+    }
+
+    @Override
+    public List<Comment> getFirstPageOfCommentsByUser(ObjectId authorId, Integer number) {
+        return createQuery()
+                .field(Comment.AUTHOR_ID).equal(authorId)
+                .order(Sort.descending(Comment.CREATION_TIME))
+                .asList(new FindOptions().limit(number));
+    }
+
+    @Override
+    public List<Comment> getPageOfCommentsByUserBefore(ObjectId authorId, Integer number, LocalDateTime dateTime) {
+        return createQuery()
+                .field(Comment.AUTHOR_ID).equal(authorId)
+                .field(Comment.CREATION_TIME).lessThan(dateTime)
+                .order(Sort.descending(Comment.CREATION_TIME))
+                .asList(new FindOptions().limit(number));
+    }
+
+    @Override
+    public boolean existsNextPageByUser(ObjectId authorId, LocalDateTime dateTime) {
+        return null != createQuery()
+                .field(Comment.AUTHOR_ID).equal(authorId)
+                .field(Comment.CREATION_TIME).lessThan(dateTime)
+                .get();
+    }
+
+    @Override
+    public void deleteAllByAuthor(ObjectId authorId) {
+        getDatastore().delete(createQuery().field(Comment.AUTHOR_ID).equal(authorId));
     }
 }

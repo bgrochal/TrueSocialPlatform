@@ -50,4 +50,24 @@ public class CommentServiceImpl implements CommentService {
     public boolean existsNextPage(ObjectId postId, LocalDateTime dateTime) {
         return commentDao.existsNextPage(postId, dateTime);
     }
+
+    @Override
+    public List<Comment> getPageOfCommentsByUserBefore(ObjectId authorId, Integer number, LocalDateTime dateTime) {
+        return commentDao.getPageOfCommentsByUserBefore(authorId, number, dateTime);
+    }
+
+    @Override
+    public List<Comment> getFirstPageOfCommentsByUser(ObjectId authorId, Integer number) {
+        return commentDao.getFirstPageOfCommentsByUser(authorId, number);
+    }
+
+    @Override
+    public boolean existsNextPageByUser(ObjectId authorId, LocalDateTime dateTime) {
+        return commentDao.existsNextPageByUser(authorId, dateTime);
+    }
+
+    @Override
+    public void removeComment(ObjectId commentId) {
+        commentDao.deleteById(commentId);
+    }
 }
