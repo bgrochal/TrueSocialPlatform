@@ -3,6 +3,7 @@ package pl.edu.agh.iet.tsp.service.impl;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import pl.edu.agh.iet.tsp.database.db.CommentDao;
 import pl.edu.agh.iet.tsp.database.db.PostDao;
 import pl.edu.agh.iet.tsp.database.domain.Post;
 import pl.edu.agh.iet.tsp.service.PostService;
@@ -20,6 +21,9 @@ public class PostServiceImpl implements PostService {
     @Autowired
     private PostDao postDao;
 
+    @Autowired
+    private CommentDao commentDao;
+
     @Override
     public List<Post> getFirstPageOfPosts(int number) {
         return postDao.getLatestPosts(number);
@@ -28,6 +32,16 @@ public class PostServiceImpl implements PostService {
     @Override
     public List<Post> getPageOfPostsBefore(int number, LocalDateTime dateTime) {
         return postDao.getLatestPostsBefore(number, dateTime);
+    }
+
+    @Override
+    public List<Post> getFirstPageOfPostsByUser(ObjectId authorId, int number) {
+        return postDao.getFirstPageOfPostsByUser(authorId, number);
+    }
+
+    @Override
+    public List<Post> getPageOfPostsByUserBefore(ObjectId authorId, int number, LocalDateTime dateTime) {
+        return postDao.getPageOfPostsByUserBefore(authorId, number, dateTime);
     }
 
     @Override
@@ -43,6 +57,11 @@ public class PostServiceImpl implements PostService {
     @Override
     public boolean existsNextPage(LocalDateTime dateTime) {
         return postDao.existsNextPage(dateTime);
+    }
+
+    @Override
+    public boolean existsNextPageByUser(ObjectId authorId, LocalDateTime dateTime) {
+        return postDao.existsNextPageByUser(authorId, dateTime);
     }
 
     @Override
@@ -65,4 +84,12 @@ public class PostServiceImpl implements PostService {
     public void updatePost(Post post) {
         postDao.save(post);
     }
+
+    @Override
+    public void removePostAndAllItsComments(ObjectId objectId) {
+        commentDao.deleteAllCommentsOfPost(objectId);
+        postDao.deleteById(objectId);
+    }
+
+
 }

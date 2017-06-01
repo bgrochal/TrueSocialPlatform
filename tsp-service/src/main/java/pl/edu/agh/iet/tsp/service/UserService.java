@@ -18,4 +18,7 @@ public interface UserService {
 
     ObjectId addUser(User user) throws DuplicateUsernameException;
 
+    void removeUserAndHisContent(ObjectId userId);
+
+    Optional<String> getUsername(ObjectId userId);
 }

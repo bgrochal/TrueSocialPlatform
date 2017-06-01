@@ -15,11 +15,17 @@ public interface PostService {
 
     List<Post> getPageOfPostsBefore(int number, LocalDateTime dateTime);
 
+    List<Post> getFirstPageOfPostsByUser(ObjectId authorId, int number);
+
+    List<Post> getPageOfPostsByUserBefore(ObjectId authorId, int number, LocalDateTime dateTime);
+
     List<Post> getFirstPageOfPostsInCategory(String category, int number);
 
     List<Post> getPageOfPostsInCategoryBefore(String category, int number, LocalDateTime dateTime);
 
     boolean existsNextPage(LocalDateTime after);
+
+    boolean existsNextPageByUser(ObjectId authorId, LocalDateTime after);
 
     boolean existsNextPageInCategory(String category, LocalDateTime after);
 
@@ -28,4 +34,6 @@ public interface PostService {
     ObjectId addPost(Post post);
 
     void updatePost(Post post);
+
+    void removePostAndAllItsComments(ObjectId objectId);
 }
