@@ -22,4 +22,12 @@ public interface CommentService {
     List<Comment> getPageOfCommentsBefore(ObjectId postId, Integer number, LocalDateTime dateTime);
 
     boolean existsNextPage(ObjectId postId, LocalDateTime dateTime);
+
+    List<Comment> getPageOfCommentsByUserBefore(ObjectId authorId, Integer number, LocalDateTime dateTime);
+
+    List<Comment> getFirstPageOfCommentsByUser(ObjectId authorId, Integer number);
+
+    boolean existsNextPageByUser(ObjectId authorId, LocalDateTime dateTime);
+
+    void removeComment(ObjectId commentId);
 }

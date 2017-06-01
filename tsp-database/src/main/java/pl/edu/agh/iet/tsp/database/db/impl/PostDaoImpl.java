@@ -13,13 +13,12 @@ import pl.edu.agh.iet.tsp.database.domain.Post;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 /**
  * @author Wojciech Pachuta.
  */
 @Repository
-public class PostDaoImpl extends BasicDAO<Post, UUID> implements PostDao {
+public class PostDaoImpl extends BasicDAO<Post, ObjectId> implements PostDao {
 
     @Autowired
     public PostDaoImpl(Datastore datastore) {
@@ -27,7 +26,7 @@ public class PostDaoImpl extends BasicDAO<Post, UUID> implements PostDao {
     }
 
     @Override
-    public List<Post> findByAuthorId(UUID authorId) {
+    public List<Post> findByAuthorId(ObjectId authorId) {
         return createQuery()
                 .field(Post.AUTHOR_ID).equal(authorId)
                 .asList();
@@ -86,5 +85,35 @@ public class PostDaoImpl extends BasicDAO<Post, UUID> implements PostDao {
                 .field(Post.AUTHOR_ID).equal(authorId)
                 .field("_id").equal(postId)
                 .get());
+    }
+
+    @Override
+    public List<Post> getFirstPageOfPostsByUser(ObjectId authorId, int number) {
+        return createQuery()
+                .field(Post.AUTHOR_ID).equal(authorId)
+                .order(Sort.descending(Post.CREATION_TIME))
+                .asList(new FindOptions().limit(number));
+    }
+
+    @Override
+    public List<Post> getPageOfPostsByUserBefore(ObjectId authorId, int number, LocalDateTime dateTime) {
+        return createQuery()
+                .field(Post.AUTHOR_ID).equal(authorId)
+                .field(Post.CREATION_TIME).lessThan(dateTime)
+                .order(Sort.descending(Post.CREATION_TIME))
+                .asList(new FindOptions().limit(number));
+    }
+
+    @Override
+    public boolean existsNextPageByUser(ObjectId authorId, LocalDateTime dateTime) {
+        return null != createQuery()
+                .field(Post.AUTHOR_ID).equal(authorId)
+                .field(Post.CREATION_TIME).lessThan(dateTime)
+                .get();
+    }
+
+    @Override
+    public void deleteAllByAuthor(ObjectId authorId) {
+        getDatastore().delete(createQuery().field(Post.AUTHOR_ID).equal(authorId));
     }
 }

@@ -1,10 +1,8 @@
 package pl.edu.agh.iet.tsp.web.controller;
 
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import pl.edu.agh.iet.tsp.database.domain.User;
 import pl.edu.agh.iet.tsp.login.oauth2.user.AuthenticatedUserDetails;
 import pl.edu.agh.iet.tsp.service.UserService;
@@ -44,6 +42,11 @@ public class UserController {
 
         authenticatedUserDetails.setDomainUser(user);
         return new IdWrapper(userService.addUser(user));
+    }
+
+    @RequestMapping(value = "/users/{userId}", method = RequestMethod.DELETE)
+    public void removeUserAndAllHisContent(@PathVariable("userId") String userId) {
+        userService.removeUserAndHisContent(new ObjectId(userId));
     }
 
 }

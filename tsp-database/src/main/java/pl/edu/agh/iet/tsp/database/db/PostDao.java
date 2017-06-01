@@ -7,14 +7,13 @@ import pl.edu.agh.iet.tsp.database.domain.Post;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 /**
  * @author Wojciech Pachuta.
  */
-public interface PostDao extends DAO<Post, UUID> {
+public interface PostDao extends DAO<Post, ObjectId> {
 
-    List<Post> findByAuthorId(UUID authorId);
+    List<Post> findByAuthorId(ObjectId authorId);
 
     /**
      * Result is sorted from latest to oldest.
@@ -41,4 +40,12 @@ public interface PostDao extends DAO<Post, UUID> {
     boolean existsNextPageInCategory(String category, LocalDateTime dateTime);
 
     Optional<Post> getPost(ObjectId authorId, ObjectId postId);
+
+    List<Post> getFirstPageOfPostsByUser(ObjectId authorId, int number);
+
+    List<Post> getPageOfPostsByUserBefore(ObjectId authorId, int number, LocalDateTime dateTime);
+
+    boolean existsNextPageByUser(ObjectId authorId, LocalDateTime after);
+
+    void deleteAllByAuthor(ObjectId authorId);
 }
