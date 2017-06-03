@@ -1,9 +1,11 @@
-<h1>True Social Platform | New User</h1>
-<div ng-controller="newUserController">
+<h1 class="page-header">True Social Platform | New User</h1>
+<div>
     <p>Thank you for registering in the application. Please, provide your user name:</p>
-    <form name="newUserForm" ng-submit="submit()" novalidate>
-        <input type="text" name="username" id="username" style="text-align: center" ng-model="username" required>
-        <input type="submit" name="submit" id="submit" value="Submit">
+    <form id="newUserForm" name="newUserForm" ng-submit="submit()">
+        <div class="form-group row col-sm-6 offset-sm-3">
+            <input type="text" id="username" class="col-sm-8" style="text-align: center" ng-model="username" required>
+            <input type="submit" id="submit" value="Submit" class="btn btn-primary col-sm-3 offset-sm-1">
+        </div>
     </form>
     <div class="alert alert-danger" ng-show="error">
         <i class="fa fa-exclamation-triangle"></i>

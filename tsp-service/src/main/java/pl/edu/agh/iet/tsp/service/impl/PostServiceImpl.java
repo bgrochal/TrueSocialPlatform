@@ -75,6 +75,11 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    public Optional<Post> getPost(ObjectId postId) {
+        return postDao.getPost(postId);
+    }
+
+    @Override
     public ObjectId addPost(Post post) {
         postDao.save(post);
         return post.getId();

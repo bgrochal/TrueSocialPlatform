@@ -31,6 +31,8 @@ public interface PostService {
 
     Optional<Post> getPost(ObjectId authorId, ObjectId postId);
 
+    Optional<Post> getPost(ObjectId postId);
+
     ObjectId addPost(Post post);
 
     void updatePost(Post post);

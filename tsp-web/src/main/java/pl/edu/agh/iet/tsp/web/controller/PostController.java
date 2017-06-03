@@ -104,6 +104,16 @@ public class PostController {
         postService.removePostAndAllItsComments(new ObjectId(postId));
     }
 
+    @RequestMapping(value = "/posts/{postId}", method = RequestMethod.GET)
+    public PostWithUsername getPost(@PathVariable("postId") String postId) throws NoSuchPostException {
+        Optional<Post> post = postService.getPost(new ObjectId(postId));
+        if (!post.isPresent()) {
+            throw new NoSuchPostException();
+        }
+
+        return new PostWithUsername(post.get(), userService.getUsername(post.get().getAuthorId()).orElse(null));
+    }
+
     @RequestMapping(value = "/posts/latest", method = RequestMethod.GET)
     public PagedResult<PostWithUsername> getLatestPosts(
             @RequestParam Integer number,

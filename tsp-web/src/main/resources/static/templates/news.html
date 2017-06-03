@@ -1,5 +1,67 @@
-<h1>True Social Platform</h1>
+<h1 class="page-header">True Social Platform</h1>
+<div>
+    <div class="jumbotron post clearfix" ng-repeat="post in allPosts">
+        <!-- DISPLAYING POST'S CONTENT AND ATTRIBUTES -->
+        <div class="row">
+            <p class="col-sm-4 metadata">Author: {{post.authorUsername}}</p>
+            <p class="col-sm-4 metadata">Category: {{post.category}}</p>
+            <p class="col-sm-4 metadata">Created: {{post.creationTime | date : "dd.MM.yyyy; HH:mm"}}
+                <span ng-show="post.lastModificationTime">(modified: {{post.lastModificationTime | date : "dd.MM.yyyy; HH:mm"}})</span></p>
+        </div>
+        <p class="text-center"><strong>{{post.title}}</strong></p>
+        <p class="text-justify" style="margin-bottom: 50px;">{{post.content}}</p>
 
-<div class="jumbotron">
-    <p>There are any posts yet.</p>
+        <!-- DISPLAYING COMMENTS TO THE POST -->
+        <div>
+            <div class="comment" ng-repeat="comment in post.comments">
+                <div class="row">
+                    <p class="col-sm-4 metadata">Author: {{comment.authorUsername}}</p>
+                    <p class="col-sm-4 offset-sm-4 metadata">Created: {{comment.creationTime | date : "dd.MM.yyyy; HH:mm"}}
+                        <span ng-show="comment.lastModificationTime">(modified: {{comment.lastModificationTime | date : "dd.MM.yyyy; HH:mm"}})</span></p>
+                </div>
+                <p class="text-justify" style="margin-left: 20px;">{{comment.content}}</p>
+            </div>
+            <div ng-show="authenticated && post.comments">
+                <form id="addCommentForm" name="addCommentForm" class="form-inline" ng-submit="addCommentSubmit(post)">
+                    <label for="newCommentContent" class="col-sm-3">Add comment</label>
+                    <textarea class="col-sm-6" id="newCommentContent" ng-model="post.comment.content" required></textarea>
+                    <input type="submit" name="submitNewComment" id="submitNewComment" value="Submit" class="btn btn-primary col-sm-1 offset-sm-1">
+                </form>
+
+                <div class="alert alert-danger" ng-show="post.newCommentError">
+                    <i class="fa fa-exclamation-triangle"></i>
+                    <p>{{post.newCommentError}}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- DISPLAYING MANAGEMENT BUTTONS -->
+        <i class="fa fa-commenting fa-2x jumbotron-icon show-comments" ng-click="getCommentsToPost(post)"
+           ng-show="!post.comments"></i>
+        <i class="fa fa-ellipsis-h fa-2x jumbotron-icon get-more-comments" ng-click="getMoreCommentsToPost(post)"
+           ng-show="post.nextComments"></i>
+
+        <div class="alert alert-danger" ng-show="post.commentsToPostError">
+            <i class="fa fa-exclamation-triangle"></i>
+            <p>{{commentsToPostError}}</p>
+        </div>
+    </div>
+
+    <!-- FILTERING -->
+    <form id="filteringForm" name="filteringForm" ng-submit="filterPosts()">
+        <div class="form-group row col-sm-8 offset-sm-2">
+            <label for="category" class="col-sm-5 col-form-label">Filter posts by the category</label>
+            <input type="text" id="category" class="col-sm-4" style="text-align: center" ng-model="postsCategory" required>
+            <input type="submit" id="filter" value="Filter" class="btn btn-primary col-sm-2 offset-sm-1">
+        </div>
+    </form>
+
+    <!-- DISPLAYING ALERTS -->
+    <div class="alert alert-danger" ng-show="latestPostsError">
+        <i class="fa fa-exclamation-triangle"></i>
+        <p>{{latestPostsError}}</p>
+    </div>
+
+    <!-- "MORE POSTS" BUTTON -->
+    <button type="button" class="btn btn-info" ng-click="getMorePosts()" ng-show="hasMorePosts">More posts</button>
 </div>

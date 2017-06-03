@@ -88,6 +88,13 @@ public class PostDaoImpl extends BasicDAO<Post, ObjectId> implements PostDao {
     }
 
     @Override
+    public Optional<Post> getPost(ObjectId postId) {
+        return Optional.ofNullable(createQuery()
+                .field("_id").equal(postId)
+                .get());
+    }
+
+    @Override
     public List<Post> getFirstPageOfPostsByUser(ObjectId authorId, int number) {
         return createQuery()
                 .field(Post.AUTHOR_ID).equal(authorId)

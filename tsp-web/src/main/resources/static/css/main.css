@@ -42,3 +42,63 @@ nav {
 .alert * {
     display: inline;
 }
+
+
+/** User's panel submenu **/
+.panel-menu .nav-link {
+    color: #292b2c;
+}
+
+.tab-content > div {
+    margin-top: 20px;
+}
+
+
+/** Posts **/
+textarea {
+    min-height: 100px;
+}
+
+.jumbotron {
+    padding: 20px;
+}
+
+p.metadata {
+    font-size: 12px;
+}
+
+.comment {
+    border-left: 0.25em solid #8a8e91;
+    margin-left: 20px;
+}
+
+.jumbotron-icon {
+    padding: 20px;
+    cursor: pointer;
+}
+
+.jumbotron-icon.remove:hover {
+    color: #c9302c;
+}
+
+.jumbotron-icon.edit:hover {
+    color: #ec971f;
+}
+
+.jumbotron-icon.show-comments:hover {
+    color: #449d44;
+}
+
+.jumbotron-icon.get-more-comments:hover {
+    color: #31b0d5;
+}
+
+.jumbotron-icon.show-post:hover {
+    color: #449d44;
+}
+
+
+/** Common templates **/
+.page-header {
+    margin-bottom: 50px;
+}
