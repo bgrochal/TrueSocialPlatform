@@ -4,7 +4,6 @@ app.controller('newsController', ['$scope', '$http', function ($scope, $http) {
         $scope.latestPostsError = null;
         $scope.hasMorePosts = true;
 
-        // TODO: Change to getting posts of current user when the server API will be completed.
         $http({
             url     : '/posts/latest',
             method  : 'GET',

@@ -3,8 +3,7 @@
     <div class="jumbotron post clearfix" ng-repeat="post in allPosts">
         <!-- DISPLAYING POST'S CONTENT AND ATTRIBUTES -->
         <div class="row">
-            <!-- TODO: Change authorId to the author's username. -->
-            <p class="col-sm-4 metadata">Author: {{post.authorId}}</p>
+            <p class="col-sm-4 metadata">Author: {{post.authorUsername}}</p>
             <p class="col-sm-4 metadata">Category: {{post.category}}</p>
             <p class="col-sm-4 metadata">Created: {{post.creationTime | date : "dd.MM.yyyy; HH:mm"}}
                 <span ng-show="post.lastModificationTime">(modified: {{post.lastModificationTime | date : "dd.MM.yyyy; HH:mm"}})</span></p>
@@ -16,8 +15,7 @@
         <div>
             <div class="comment" ng-repeat="comment in post.comments">
                 <div class="row">
-                    <!-- TODO: Change authorId to the author's username. -->
-                    <p class="col-sm-4 metadata">Author: {{comment.authorId}}</p>
+                    <p class="col-sm-4 metadata">Author: {{comment.authorUsername}}</p>
                     <p class="col-sm-4 offset-sm-4 metadata">Created: {{comment.creationTime | date : "dd.MM.yyyy; HH:mm"}}
                         <span ng-show="comment.lastModificationTime">(modified: {{comment.lastModificationTime | date : "dd.MM.yyyy; HH:mm"}})</span></p>
                 </div>

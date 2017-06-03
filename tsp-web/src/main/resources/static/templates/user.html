@@ -26,6 +26,13 @@
         <!-- "HOME" MENU ITEM -->
         <div id="home" class="tab-pane fade active show" role="tabpanel">
             <p>{{welcomeMessage}}</p>
+            <button type="button" class="btn btn-danger" ng-click="deleteAccount()">Delete account</button>
+
+            <div class="alert alert-danger" ng-show="deletingAccountError">
+                <i class="fa fa-exclamation-triangle"></i>
+                <p>{{deletingAccountError}}</p>
+            </div>
+
         </div>
 
         <!-- "ADD POST" MENU ITEM -->
@@ -67,8 +74,7 @@
             <div class="jumbotron post clearfix" ng-repeat="post in allPosts">
                 <!-- DISPLAYING POST'S CONTENT AND ATTRIBUTES -->
                 <div class="row">
-                    <!-- TODO: Change authorId to the author's username. -->
-                    <p class="col-sm-4 metadata">Author: {{post.authorId}}</p>
+                    <p class="col-sm-4 metadata">Author: {{post.authorUsername}}</p>
                     <p class="col-sm-4 metadata">Category: {{post.category}}</p>
                     <p class="col-sm-4 metadata">Created: {{post.creationTime | date : "dd.MM.yyyy; HH:mm"}}
                         <span ng-show="post.lastModificationTime">(modified: {{post.lastModificationTime | date : "dd.MM.yyyy; HH:mm"}})</span>
@@ -81,8 +87,7 @@
                 <div>
                     <div class="comment" ng-repeat="comment in post.comments">
                         <div class="row">
-                            <!-- TODO: Change authorId to the author's username. -->
-                            <p class="col-sm-4 metadata">Author: {{comment.authorId}}</p>
+                            <p class="col-sm-4 metadata">Author: {{comment.authorUsername}}</p>
                             <p class="col-sm-4 offset-sm-4 metadata">Created: {{comment.creationTime | date : "dd.MM.yyyy; HH:mm"}}
                                 <span ng-show="comment.lastModificationTime">(modified: {{comment.lastModificationTime | date : "dd.MM.yyyy; HH:mm"}})</span></p>
                         </div>
@@ -90,8 +95,13 @@
                     </div>
                 </div>
 
+                <div class="alert alert-danger" ng-show="post.postRelatedError">
+                    <i class="fa fa-exclamation-triangle"></i>
+                    <p>{{post.postRelatedError}}</p>
+                </div>
+
                 <!-- DISPLAYING MANAGEMENT BUTTONS -->
-                <i class="fa fa-remove fa-2x jumbotron-icon remove" ng-click="deletePost(post.id)"></i>
+                <i class="fa fa-remove fa-2x jumbotron-icon remove" ng-click="deletePost(post)"></i>
                 <i class="fa fa-edit fa-2x jumbotron-icon edit" ng-click="editPost(post)"></i>
                 <i class="fa fa-commenting fa-2x jumbotron-icon show-comments" ng-click="getCommentsToPost(post)"
                    ng-show="!post.comments"></i>
@@ -109,6 +119,9 @@
                 <p>{{commentsToPostError}}</p>
             </div>
 
+            <!-- FILTERING -->
+            <!-- TODO: Add filtering by a   category -->
+
             <!-- "MORE POSTS" BUTTON -->
             <button type="button" class="btn btn-info" ng-click="getMorePosts()" ng-show="hasMorePosts">More posts</button>
         </div>
@@ -119,8 +132,7 @@
                 <!-- DISPLAYING COMMENT'S CONTENT AND ATTRIBUTES -->
                 <div class="comment">
                     <div class="row">
-                        <!-- TODO: Change authorId to the author's username. -->
-                        <p class="col-sm-4 metadata">Author: {{comment.authorId}}</p>
+                        <p class="col-sm-4 metadata">Author: {{comment.authorUsername}}</p>
                         <p class="col-sm-4 offset-sm-4 metadata">Created: {{comment.creationTime | date : "dd.MM.yyyy; HH:mm"}}
                             <span ng-show="comment.lastModificationTime">(modified: {{comment.lastModificationTime | date : "dd.MM.yyyy; HH:mm"}})</span></p>
                     </div>
@@ -128,9 +140,14 @@
                 </div>
 
                 <!-- DISPLAYING MANAGEMENT BUTTONS -->
-                <i class="fa fa-remove fa-2x jumbotron-icon remove" ng-click="deleteComment(comment.id)"></i>
+                <i class="fa fa-remove fa-2x jumbotron-icon remove" ng-click="deleteComment(comment)"></i>
                 <i class="fa fa-edit fa-2x jumbotron-icon edit" ng-click="editComment(comment)"></i>
                 <i class="fa fa-file-text fa-2x jumbotron-icon show-post" ng-click="getPostToComment(comment)"></i>
+
+                <div class="alert alert-danger" ng-show="comment.commentRelatedError">
+                    <i class="fa fa-exclamation-triangle"></i>
+                    <p>{{comment.commentRelatedError}}</p>
+                </div>
             </div>
 
             <!-- DISPLAYING ALERTS -->
@@ -229,7 +246,7 @@
                 </div>
 
                 <div class="modal-body">
-                    <p class="metadata text-left">Author: {{postToCurrentComment.authorId}}</p>
+                    <p class="metadata text-left">Author: {{postToCurrentComment.authorUsername}}</p>
                     <p class="metadata text-left">Category: {{postToCurrentComment.category}}</p>
                     <p class="metadata text-left">Created: {{postToCurrentComment.creationTime | date : "dd.MM.yyyy; HH:mm"}}
                         <span ng-show="postToCurrentComment.lastModificationTime">(modified: {{postToCurrentComment.lastModificationTime | date : "dd.MM.yyyy; HH:mm"}})</span></p>

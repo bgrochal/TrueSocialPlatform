@@ -19,6 +19,8 @@ app.controller('userController', ['$scope', '$http', function ($scope, $http) {
 
         $scope.latestCommentsError = null;
         $scope.editedCommentError = null;
+
+        $scope.deletingAccountError = null;
     };
 
     $scope.newPostSubmit = function () {
@@ -48,12 +50,12 @@ app.controller('userController', ['$scope', '$http', function ($scope, $http) {
         $scope.latestPostsError = null;
         $scope.hasMorePosts = true;
 
-        // TODO: Change to getting posts of current user when the server API will be completed.
         $http({
-            url     : '/posts/latest',
+            url     : '/posts',
             method  : 'GET',
             params  : {
-                'number' : 5
+                'authorId'  : $scope.$parent.id,
+                'number'    : 5
             }
         }).then(
             function (response) {
@@ -85,11 +87,21 @@ app.controller('userController', ['$scope', '$http', function ($scope, $http) {
         );
     };
 
-    $scope.deletePost = function (postId) {
-        // TODO: make a request to the server and put the code below into the successful callback.
-        $scope.allPosts = $scope.allPosts.filter(function (post) {
-            return post.id != postId;
-        });
+    $scope.deletePost = function (post) {
+        $http({
+            url     : '/posts/' + post.id,
+            method  : 'DELETE'
+        }).then(
+            function (response) {
+                $scope.allPosts = $scope.allPosts.filter(function (p) {
+                    return p.id != post.id;
+                });
+            },
+            function (error) {
+                post.postRelatedError = "Unable to delete the post (" + error.status + ").";
+                console.log(error);
+            }
+        );
     };
 
     $scope.editPost = function (post) {
@@ -162,12 +174,11 @@ app.controller('userController', ['$scope', '$http', function ($scope, $http) {
         $scope.latestCommentsError = null;
         $scope.hasMoreComments = true;
 
-        // TODO: Change to getting comments of current user when the server API will be completed.
         $http({
-            url     : '/comments/latest',
+            url     : '/comments',
             method  : 'GET',
             params  : {
-                'postId'    : '5922d5cd9a2ffe1c74acf31b',
+                'authorId'  : $scope.$parent.id,
                 'number'    : 5
             }
         }).then(
@@ -200,11 +211,21 @@ app.controller('userController', ['$scope', '$http', function ($scope, $http) {
         );
     };
 
-    $scope.deleteComment = function (commentId) {
-        // TODO: make a request to the server and put the code below into the successful callback.
-        $scope.allComments = $scope.allComments.filter(function (comment) {
-            return comment.id != commentId;
-        });
+    $scope.deleteComment = function (comment) {
+        $http({
+            url     : '/comments/' + comment.id,
+            method  : 'DELETE'
+        }).then(
+            function (response) {
+                $scope.allComments = $scope.allComments.filter(function (c) {
+                    return c.id != comment.id;
+                });
+            },
+            function (error) {
+                comment.commentRelatedError = "Unable to delete the comment (" + error.status + ").";
+                console.log(error);
+            }
+        );
     };
 
     $scope.editComment = function (comment) {
@@ -239,20 +260,36 @@ app.controller('userController', ['$scope', '$http', function ($scope, $http) {
     };
 
     $scope.getPostToComment = function (comment) {
-        // TODO: Change to getting the post with given comment.postId when the server API will be completed.
         $http({
-            url     : '/posts/latest',
+            url     : '/posts/' + comment.postId,
             method  : 'GET',
             params  : {
-                'number' : 1
+                'authorId' : $scope.$parent.id
             }
         }).then(
             function (response) {
-                $scope.postToCurrentComment = response.data.data[0];
+                $scope.postToCurrentComment = response.data;
                 $('#postToCommentModal').modal();
             },
             function (error) {
                 $scope.postToCommentError = 'Unexpected error: ' + error.status + '.';
+                console.log(error);
+            }
+        );
+    };
+
+    $scope.deleteAccount = function () {
+        $scope.deletingAccountError = null;
+
+        $http({
+            url     : '/users/' + $scope.$parent.id,
+            method  : 'DELETE'
+        }).then(
+            function (response) {
+                $scope.$parent.logout();
+            },
+            function (error) {
+                $scope.deletingAccountError = 'Unexpected error while deleting the account: ' + error.status + '.';
                 console.log(error);
             }
         );
