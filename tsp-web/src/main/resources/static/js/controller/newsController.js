@@ -123,6 +123,29 @@ app.controller('newsController', ['$scope', '$http', function ($scope, $http) {
         });
     };
 
+    $scope.filterPosts = function () {
+        $scope.latestPostsError = null;
+
+        $http({
+            url     : '/posts/latest',
+            method  : 'GET',
+            params  : {
+                'number'    : 5,
+                'category'  : $scope.postsCategory
+            }
+        }).then(
+            function (response) {
+                $scope.allPosts = response.data.data;
+                $scope.nextPageUrl = response.data.next;
+                $scope.hasMorePosts = $scope.nextPageUrl != null;
+            },
+            function (error) {
+                $scope.latestPostsError = 'Unexpected error: ' + error.status + '.';
+                console.log(error);
+            }
+        );
+    };
+
 
     $scope.getLatestPosts();
 

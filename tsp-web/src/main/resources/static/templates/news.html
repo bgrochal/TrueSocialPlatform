@@ -47,6 +47,15 @@
         </div>
     </div>
 
+    <!-- FILTERING -->
+    <form id="filteringForm" name="filteringForm" ng-submit="filterPosts()">
+        <div class="form-group row col-sm-8 offset-sm-2">
+            <label for="category" class="col-sm-5 col-form-label">Filter posts by the category</label>
+            <input type="text" id="category" class="col-sm-4" style="text-align: center" ng-model="postsCategory" required>
+            <input type="submit" id="filter" value="Filter" class="btn btn-primary col-sm-2 offset-sm-1">
+        </div>
+    </form>
+
     <!-- DISPLAYING ALERTS -->
     <div class="alert alert-danger" ng-show="latestPostsError">
         <i class="fa fa-exclamation-triangle"></i>
