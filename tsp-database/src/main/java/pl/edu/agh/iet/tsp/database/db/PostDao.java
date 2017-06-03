@@ -41,6 +41,8 @@ public interface PostDao extends DAO<Post, ObjectId> {
 
     Optional<Post> getPost(ObjectId authorId, ObjectId postId);
 
+    Optional<Post> getPost(ObjectId postId);
+
     List<Post> getFirstPageOfPostsByUser(ObjectId authorId, int number);
 
     List<Post> getPageOfPostsByUserBefore(ObjectId authorId, int number, LocalDateTime dateTime);
