@@ -123,4 +123,11 @@ public class PostDaoImpl extends BasicDAO<Post, ObjectId> implements PostDao {
     public void deleteAllByAuthor(ObjectId authorId) {
         getDatastore().delete(createQuery().field(Post.AUTHOR_ID).equal(authorId));
     }
+
+    @Override
+    public List<Post> getAllByAuthor(ObjectId authorId) {
+        return createQuery()
+                .field(Post.AUTHOR_ID).equal(authorId)
+                .asList();
+    }
 }

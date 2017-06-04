@@ -8,6 +8,7 @@ import pl.edu.agh.iet.tsp.database.db.CommentDao;
 import pl.edu.agh.iet.tsp.database.db.PostDao;
 import pl.edu.agh.iet.tsp.database.db.UserDao;
 import pl.edu.agh.iet.tsp.database.domain.AuthenticationData;
+import pl.edu.agh.iet.tsp.database.domain.Post;
 import pl.edu.agh.iet.tsp.database.domain.User;
 import pl.edu.agh.iet.tsp.service.UserService;
 import pl.edu.agh.iet.tsp.service.exception.DuplicateUsernameException;
@@ -53,6 +54,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void removeUserAndHisContent(ObjectId userId) {
         commentDao.deleteAllByAuthor(userId);
+        postDao.getAllByAuthor(userId).stream().map(Post::getId).forEach(commentDao::deleteAllCommentsOfPost);
         postDao.deleteAllByAuthor(userId);
         userDao.deleteById(userId);
     }

@@ -50,4 +50,6 @@ public interface PostDao extends DAO<Post, ObjectId> {
     boolean existsNextPageByUser(ObjectId authorId, LocalDateTime after);
 
     void deleteAllByAuthor(ObjectId authorId);
+
+    List<Post> getAllByAuthor(ObjectId authorId);
 }
