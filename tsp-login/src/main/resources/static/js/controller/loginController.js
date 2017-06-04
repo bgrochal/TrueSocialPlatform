@@ -9,13 +9,16 @@ app.controller('loginController', ['$http', '$scope', '$location', function ($ht
                 // User logged in successfully, but he/she may not have username provided (e.g. because it's his/her
                 // first login attempt).
                 if (response.data.username == null) {
-                    $scope.usernameWarning = 'User ' + response.data.name + ' does not have any user name provided.'
+                    $scope.usernameWarning = response.data.name ?
+                        'User ' + response.data.name + ' does not have any user name provided.' :
+                        'The logged in user does not have any user name provided.';
                 }
 
                 $scope.id = response.data.id;
 
                 $scope.authenticated = true;
-                $scope.user = response.data.name.concat(' (', response.data.username, ')');
+                $scope.user = response.data.name ?  response.data.name.concat(' (', response.data.username, ')') :
+                                                    response.data.username;
             },
             function (error) {
                 if (error.status == 403) {
