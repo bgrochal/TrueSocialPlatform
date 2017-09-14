@@ -11,11 +11,12 @@ You need to have the following tools installed:
 ## Installation and Commissioning
 Start your MongoDB server. This may be done by typing (in the project root directory):
 ```
-mkdir db                    # Creating directory for storing data
-mongod --dbpath ./db        # Starting MongoDB server
+mkdir db                    # Creating a directory for storing data
+mongod --dbpath ./db        # Starting the MongoDB server
 ```
-To set up whole infrastructure and deploy the application to the local Tomcat server, simply type:
+To set up the whole infrastructure and deploy the application to a local Tomcat server, simply type:
 ```
 mvn package
 ```
 in the project root directory.
+
